@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+<title>AI 编程词典</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fdfdfc;
+  --fg: #1f2328;
+  --muted: #656d76;
+  --border: #d8dee4;
+  --accent: #0969da;
+  --code-bg: #f0f1f3;
+  --table-head: #f6f8fa;
+  --btn-bg: #1f2328;
+  --btn-fg: #ffffff;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --fg: #e6edf3;
+    --muted: #8d96a0;
+    --border: #30363d;
+    --accent: #6cb6ff;
+    --code-bg: #1c2128;
+    --table-head: #161b22;
+    --btn-bg: #e6edf3;
+    --btn-fg: #0d1117;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-text-size-adjust: 100%;
+  overflow-wrap: break-word;
+}
+.page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem calc(5rem + env(safe-area-inset-bottom));
+}
+header.site { padding: 1rem 0 0.5rem; }
+header.site h1 { margin: 0; font-size: 1.75rem; line-height: 1.3; }
+header.site p { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.95rem; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.18em; }
+a:active { opacity: 0.7; }
+nav.toc {
+  margin: 1.5rem 0 2rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+nav.toc h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+nav.toc details { border-bottom: 1px solid var(--border); }
+nav.toc details:last-child { border-bottom: 0; }
+nav.toc summary {
+  padding: 0.6rem 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style-position: inside;
+}
+nav.toc summary::marker { color: var(--muted); }
+nav.toc ul { list-style: none; margin: 0 0 0.5rem; padding: 0 0 0 0.75rem; }
+nav.toc li { margin: 0; }
+nav.toc li a {
+  display: block;
+  padding: 0.4rem 0.25rem;
+  text-decoration: none;
+  border-radius: 4px;
+}
+nav.toc li a:active { background: var(--code-bg); }
+section.chapter { margin-top: 2.5rem; }
+section.chapter > h2 {
+  margin: 0 0 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+section.entry { padding: 0.5rem 0 1rem; scroll-margin-top: 0.5rem; }
+section.entry + section.entry {
+  margin-top: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+section.entry h3 { margin: 0 0 0.75rem; font-size: 1.18rem; line-height: 1.4; }
+section.entry:target h3 { color: var(--accent); }
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.4rem; }
+li { margin: 0.2rem 0; }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+  background: var(--code-bg);
+  overflow-wrap: anywhere;
+}
+.table-wrap {
+  margin: 0 0 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table { border-collapse: collapse; width: 100%; font-size: 0.94rem; line-height: 1.6; }
+th, td {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+th { background: var(--table-head); font-weight: 600; }
+th:first-child, td:first-child { white-space: nowrap; }
+button.to-toc {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font: inherit;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+button.to-toc[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="site">
+<h1>AI 编程词典</h1>
+<p>71 个词条 · 7 章 · 简体中文</p>
+</header>
+<nav class="toc" id="toc" aria-label="目录">
+<h2>目录</h2>
+<details class="toc-group">
+<summary>Section 1 — The Model（模型）</summary>
+<ul>
+<li><a href="#ai人工智能">AI（人工智能）</a></li>
+<li><a href="#model模型">Model（模型）</a></li>
+<li><a href="#parameters参数">Parameters（参数）</a></li>
+<li><a href="#training训练">Training（训练）</a></li>
+<li><a href="#inference推理">Inference（推理）</a></li>
+<li><a href="#effort推理力度">Effort（推理力度）</a></li>
+<li><a href="#token词元">Token（词元）</a></li>
+<li><a href="#next-token-prediction下一个-token-预测">Next-token prediction（下一个 Token 预测）</a></li>
+<li><a href="#non-determinism非确定性">Non-determinism（非确定性）</a></li>
+<li><a href="#model-provider模型提供方">Model provider（模型提供方）</a></li>
+<li><a href="#harness">Harness</a></li>
+<li><a href="#model-provider-request模型提供方请求">Model provider request（模型提供方请求）</a></li>
+<li><a href="#input-tokens输入-token">Input tokens（输入 Token）</a></li>
+<li><a href="#output-tokens输出-token">Output tokens（输出 Token）</a></li>
+<li><a href="#prefix-cache前缀缓存">Prefix cache（前缀缓存）</a></li>
+<li><a href="#cache-tokens缓存-token">Cache tokens（缓存 Token）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 2 — Sessions, Context Windows &amp; Turns（会话、上下文窗口与轮次）</summary>
+<ul>
+<li><a href="#stateless无状态">Stateless（无状态）</a></li>
+<li><a href="#context上下文">Context（上下文）</a></li>
+<li><a href="#context-window上下文窗口">Context window（上下文窗口）</a></li>
+<li><a href="#stateful有状态">Stateful（有状态）</a></li>
+<li><a href="#agent智能体">Agent（智能体）</a></li>
+<li><a href="#system-prompt系统提示词">System prompt（系统提示词）</a></li>
+<li><a href="#session会话">Session（会话）</a></li>
+<li><a href="#turn轮次">Turn（轮次）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 3 — Tools &amp; Environment（工具与环境）</summary>
+<ul>
+<li><a href="#environment环境">Environment（环境）</a></li>
+<li><a href="#filesystem文件系统">Filesystem（文件系统）</a></li>
+<li><a href="#tool工具">Tool（工具）</a></li>
+<li><a href="#tool-call工具调用">Tool call（工具调用）</a></li>
+<li><a href="#tool-result工具结果">Tool result（工具结果）</a></li>
+<li><a href="#mcp模型上下文协议">MCP（模型上下文协议）</a></li>
+<li><a href="#permission-request权限请求">Permission request（权限请求）</a></li>
+<li><a href="#permission-mode权限模式">Permission mode（权限模式）</a></li>
+<li><a href="#agent-mode智能体模式">Agent mode（智能体模式）</a></li>
+<li><a href="#sandbox沙箱">Sandbox（沙箱）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 4 — Failure Modes（失败模式）</summary>
+<ul>
+<li><a href="#sycophancy谄媚">Sycophancy（谄媚）</a></li>
+<li><a href="#hallucination幻觉">Hallucination（幻觉）</a></li>
+<li><a href="#parametric-knowledge参数化知识">Parametric knowledge（参数化知识）</a></li>
+<li><a href="#knowledge-cutoff知识截止时间">Knowledge cutoff（知识截止时间）</a></li>
+<li><a href="#contextual-knowledge上下文知识">Contextual knowledge（上下文知识）</a></li>
+<li><a href="#attention-relationship注意力关系">Attention relationship（注意力关系）</a></li>
+<li><a href="#attention-budget注意力预算">Attention budget（注意力预算）</a></li>
+<li><a href="#attention-degradation注意力退化">Attention degradation（注意力退化）</a></li>
+<li><a href="#smart-zone智能区">Smart zone（智能区）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 5 — Handoffs（交接）</summary>
+<ul>
+<li><a href="#clearing清空上下文">Clearing（清空上下文）</a></li>
+<li><a href="#handoff交接">Handoff（交接）</a></li>
+<li><a href="#primary-source一手来源">Primary source（一手来源）</a></li>
+<li><a href="#secondary-source二手来源">Secondary source（二手来源）</a></li>
+<li><a href="#handoff-artifact交接产物">Handoff artifact（交接产物）</a></li>
+<li><a href="#spec规格">Spec（规格）</a></li>
+<li><a href="#ticket工单">Ticket（工单）</a></li>
+<li><a href="#compaction压缩">Compaction（压缩）</a></li>
+<li><a href="#autocompact自动压缩">Autocompact（自动压缩）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 6 — Memory and Steering（记忆与引导）</summary>
+<ul>
+<li><a href="#memory-system记忆系统">Memory system（记忆系统）</a></li>
+<li><a href="#agentsmd">AGENTS.md</a></li>
+<li><a href="#progressive-disclosure渐进式披露">Progressive disclosure（渐进式披露）</a></li>
+<li><a href="#context-pointer上下文指针">Context pointer（上下文指针）</a></li>
+<li><a href="#skill技能">Skill（技能）</a></li>
+<li><a href="#subagent子智能体">Subagent（子智能体）</a></li>
+</ul>
+</details>
+<details class="toc-group">
+<summary>Section 7 — Patterns of Work（工作模式）</summary>
+<ul>
+<li><a href="#human-in-the-loop人在回路">Human-in-the-loop（人在回路）</a></li>
+<li><a href="#afk离开键盘">AFK（离开键盘）</a></li>
+<li><a href="#automated-check自动化检查">Automated check（自动化检查）</a></li>
+<li><a href="#automated-review自动化审查">Automated review（自动化审查）</a></li>
+<li><a href="#human-review人工审查">Human review（人工审查）</a></li>
+<li><a href="#vibe-coding氛围编程">Vibe coding（氛围编程）</a></li>
+<li><a href="#design-concept设计概念">Design concept（设计概念）</a></li>
+<li><a href="#grilling盘问">Grilling（盘问）</a></li>
+<li><a href="#prototyping原型制作">Prototyping（原型制作）</a></li>
+<li><a href="#dx开发者体验">DX（开发者体验）</a></li>
+<li><a href="#ax智能体体验">AX（智能体体验）</a></li>
+<li><a href="#software-factory软件工厂">Software factory（软件工厂）</a></li>
+<li><a href="#dark-factory黑灯工厂">Dark factory（黑灯工厂）</a></li>
+</ul>
+</details>
+</nav>
+<main>
+<section class="chapter">
+<h2>Section 1 — The Model（模型）</h2>
+<section class="entry" id="ai人工智能">
+<h3>AI（人工智能）</h3>
+<p>AI 是一个不断移动的标签，而不是一项技术。AI 不像<a href="#model模型">模型</a>或 <a href="#token词元">Token</a>那样指向固定的东西——它指向计算机刚刚能做到、且令人惊叹的任何事。眼下，它指向大语言模型。以前，它指向过非常不同的东西：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>时期</th><th>“AI”的含义</th></tr></thead>
+<tbody><tr><td>1950s</td><td>符号推理——定理证明器、跳棋程序。</td></tr>
+<tr><td>1960s–70s</td><td>基于规则的符号程序——ELIZA、SHRDLU。</td></tr>
+<tr><td>1980s</td><td>专家系统——成千上万条手写的 if-then 规则，用来编码人类专家的知识。</td></tr>
+<tr><td>1990s</td><td>博弈树搜索——Deep Blue 击败 Kasparov（1997）。研究者完全回避了“AI”这个词</td></tr>
+<tr><td>2000s</td><td>统计机器学习——垃圾邮件过滤器、推荐系统。仍以“机器学习”而非“AI”的名义出售</td></tr>
+<tr><td>2010s</td><td>深度学习——图像识别（AlexNet，2012）、AlphaGo（2016）。</td></tr>
+<tr><td>2020s</td><td>大语言模型——ChatGPT（2022）让“AI”等同于聊天机器人</td></tr></tbody>
+</table>
+</div>
+<p>指针按一个已知的机制移动，这个机制有时叫作 AI 效应：一项技术一旦稳定可用，就会被改名——它“只是”搜索，“只是”统计——而“AI”则滑向下一个尚未解决的问题。这个观察由来已久。Bertram Raphael 在 1971 年这样表述：“AI 是我们还不知道如何用计算机妥善解决的问题的统称。”Larry Tesler 在 1979 年前后的版本是：“智能就是机器尚未做到的事。”</p>
+<p>这就是为什么关于 AI 的对话经常各说各话。像“AI 不会推理”或“AI 被吹过头了”这样的说法，暗含一个时间戳——它可能说的是专家系统，可能是 2010 年代的图像分类器，也可能是上个月的 LLM，而每种指代支持不同的结论。当一场关于 AI 的讨论卡住时，解决办法通常是把这个词换成真正想说的精确术语：模型、<a href="#harness">Harness</a>、<a href="#agent智能体">智能体</a>，或者给它的<a href="#context上下文">上下文</a>。</p>
+<p><em>Avoid:</em> 在技术断言里使用“AI”——改为说出你指的那一部分。“AI 编程”作为这项实践的标签没问题；“AI 在产生幻觉”不行。</p>
+<p><em>Usage:</em></p>
+<p>“CTO 想知道 AI 能不能接手分诊队列。”</p>
+<p>“先把这句话翻译成具体问题再定范围——她指的是运行在 Harness 里、能访问工单系统的大语言模型。单独的‘AI’不是一份规格说明。”</p>
+</section>
+<section class="entry" id="model模型">
+<h3>Model（模型）</h3>
+<p>模型就是那堆<a href="#parameters参数">参数</a>。它<a href="#stateless无状态">无状态</a>——只做<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>，不做别的。“Claude Opus 4.x”和“GPT-5.x”都是模型。单独一个模型做不了任何智能体式的工作；它必须接入 <a href="#harness">Harness</a>。</p>
+<p>模型不能读文件、运行命令、浏览网页，也记不住昨天——它读入 <a href="#token词元">Token</a>，预测出 Token，每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>只做一遍。所有看起来像一个<a href="#agent智能体">智能体</a>在工作的事情——选择<a href="#tool工具">工具</a>、读取结果、循环到任务完成——都是 Harness 把一长串这样的预测编排起来。</p>
+<p><a href="#model-provider模型提供方">模型提供方</a>按档位交付模型：一个大模型最聪明，但慢且贵；小一些的更快、更便宜，能力也弱一些。选档位是一个真实的决定——规划和艰难调试用重档，机械改动用轻档——而 Harness 允许你在<a href="#session会话">会话</a>中途切换。</p>
+<p>严格区分这个词也能让诊断更准。“模型不擅长这个”是一个具体的断言——同一个模型换一个 Harness，或者换一份<a href="#context上下文">上下文</a>，表现常常完全不同。在怪模型之前，先检查它拿到了什么：大多数令人失望的输出，根源在上下文或 Harness，而不在参数。</p>
+<p><em>Usage:</em></p>
+<p>“规划那一步，要不要把模型从 Sonnet 换成 Opus？”</p>
+<p>“可以试——但这项任务里大部分活是 Harness 在干。如果<a href="#system-prompt系统提示词">系统提示词</a>和工具不对，换模型也帮不上忙。”</p>
+</section>
+<section class="entry" id="parameters参数">
+<h3>Parameters（参数）</h3>
+<p><a href="#model模型">模型</a>内部的数字——常常有几十亿个——在<a href="#training训练">训练</a>期间调定。模型“知道”的一切都住在这些数字里。训练设定它们；<a href="#inference推理">推理</a>原封不动地使用它们。它们也叫<em>权重</em>。</p>
+<p>从机制上说，参数是把输入变成输出的东西。<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>是一次巨大的计算：<a href="#context-window上下文窗口">上下文窗口</a>里的 <a href="#token词元">Token</a> 被送进计算，经过参数做乘法，出来的就是下一个 Token 的预测。模型里没有事实数据库，没有代码查找表——只有这些数字，它们的排列方式让计算倾向于产生有用的输出。模型能从训练里背出来的事实，比如某个标准库的 API，属于<a href="#parametric-knowledge参数化知识">参数化知识</a>：存在参数里，不是从别处检索来的。</p>
+<p>值得记住的细节是：参数在训练之后就冻结了。你在<a href="#session会话">会话</a>里做的任何事都不会改变它们——你做的纠正、你给它看的代码库，都不会；它也不会从任何错误中学到东西。每个会话都跑在同样的数字上。这就是模型<a href="#stateless无状态">无状态</a>的原因，是它内置的知识停在<a href="#knowledge-cutoff知识截止时间">知识截止时间</a>的原因，也是任何项目特有的东西必须通过<a href="#context上下文">上下文</a>送进来的原因。改变参数的唯一办法是继续训练——而那实际上会产生另一个模型。</p>
+<p><em>Usage:</em></p>
+<p>“能不能用我们的代码库微调它？”</p>
+<p>“那会更新参数——之后就是另一个模型了。对单个项目来说，把代码库作为上下文载入，几乎总比重新训练便宜。”</p>
+</section>
+<section class="entry" id="training训练">
+<h3>Training（训练）</h3>
+<p>训练是设定<a href="#model模型">模型</a><a href="#parameters参数">参数</a>的过程：让模型接触海量文本，调整参数，让<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>更准。这是一次性的昂贵过程，由<a href="#model-provider模型提供方">模型提供方</a>完成。它包含预训练（主体那一轮）和后训练（之后的精修，比如指令遵循和安全性）；在这个词典的层面上，两者的区别不重要。</p>
+<p>机制就是大规模重复：给模型看一段文本，让它预测下一个 <a href="#token词元">Token</a>，把参数朝着实际的下一个 Token 推一点，然后在数万亿 Token 上重复。没有任何东西以事实或规则的形式被存下来——模型“知道”的一切，都是它越来越擅长预测的副作用，以<a href="#parametric-knowledge参数化知识">参数化知识</a>的形式压缩进参数。</p>
+<p>有两条后果在日常使用中很重要。训练在一个时间点结束，所以模型有<a href="#knowledge-cutoff知识截止时间">知识截止时间</a>——它没看过你上个月升级的那个库版本。而且训练不是你能做的事：当模型不了解你的代码库、你的约定或内部 API 时，解决办法从来不是“教模型”，而是把这些材料放进<a href="#context上下文">上下文</a>，那是你唯一能控制的输入。</p>
+<p><em>Usage:</em></p>
+<p>“能让它知道我们的内部 API 吗？”</p>
+<p>“不能靠训练——那是模型提供方耗时数月的过程。把 API 文档载入上下文；那才是你手里的杠杆。”</p>
+</section>
+<section class="entry" id="inference推理">
+<h3>Inference（推理）</h3>
+<p>推理是运行一个已训练的<a href="#model模型">模型</a>来生成输出——每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>都会发生。<a href="#parameters参数">参数</a>保持不变；模型只是做<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>，输入是它拿到的<a href="#context上下文">上下文</a>。相对于<a href="#training训练">训练</a>它很便宜，但按 <a href="#token词元">Token</a> 计费，是使用模型的主要成本。</p>
+<p>模型的一生分成两个阶段：</p>
+<div class="table-wrap">
+<table style="min-width:28rem">
+<thead><tr><th>阶段</th><th>何时发生</th><th>做什么</th><th>参数</th></tr></thead>
+<tbody><tr><td>训练</td><td>发布前一次</td><td>从训练语料中产出参数</td><td>正在写入</td></tr>
+<tr><td>推理</td><td>每次有人使用模型时</td><td>用冻结的参数跑你的上下文，生成 Token</td><td>只读</td></tr></tbody>
+</table>
+</div>
+<p>推理时你做的任何事都不会写回参数——这就是今天做的纠正明天不管用的原因。那个在你仔细解释了修复之后，下一个<a href="#session会话">会话</a>仍然犯同样错误的模型，并没有无视你；它没有能力从这次交流中学习。模型是<a href="#stateless无状态">无状态</a>的——连续性必须来自它之外——来自<a href="#context-window上下文窗口">上下文窗口</a>或<a href="#memory-system记忆系统">记忆系统</a>。</p>
+<p>这个机制也解释了计费方式。每次请求都让模型跑完整个上下文，所以成本随<a href="#input-tokens输入-token">输入 Token</a>和<a href="#output-tokens输出-token">输出 Token</a>增长；一个发起几十次<a href="#tool工具">工具</a>调用的智能体，每一次往返都要为推理付费。这就是为什么上下文大小既是质量问题，也是成本问题。</p>
+<p><em>Usage:</em></p>
+<p>“为什么账单随用量增长，而不是一笔固定授权费？”</p>
+<p>“你付的是推理费——每次模型提供方请求都在提供方的硬件上跑模型。训练早就完成了，但推理成本按请求累积；一次<a href="#turn轮次">轮次</a>在调用工具时可能展开成很多次请求。”</p>
+</section>
+<section class="entry" id="effort推理力度">
+<h3>Effort（推理力度）</h3>
+<p>推理力度是控制<a href="#model模型">模型</a>在回答前做多少推理的旋钮。它按<a href="#model-provider-request模型提供方请求">模型提供方请求</a>设置，决定模型在开始写你看到的回答之前，先在内部思考多长时间。那段思考也是在<a href="#inference推理">推理</a>时生成的，和其他输出一样；<a href="#harness">Harness</a>通常把它藏起来，但那是模型真在做的工作。</p>
+<p>更高的推理力度更贵、更慢。推理以 <a href="#token词元">Token</a> 的形式输出，按<a href="#output-tokens输出-token">输出 Token</a>计费，即使你从没见过它们；而且一次只生成一个 Token——所以调高推理力度会拉长等答案的时间，也抬高账单。这是更多斟酌与速度、成本之间的交换。</p>
+<p>大多数 Harness 把推理力度暴露成一个小阶梯：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>档位</th><th>适用场景</th></tr></thead>
+<tbody><tr><td>低</td><td>机械改动、查找、定义清楚且只有一条路径的变更。</td></tr>
+<tr><td>中</td><td>日常编码——通常的默认值。</td></tr>
+<tr><td>高</td><td>棘手的 bug、设计决策、多步计划。</td></tr>
+<tr><td>最高</td><td>最难的问题，答错的返工代价很高。</td></tr></tbody>
+</table>
+</div>
+<p>设错了，两个方向都会出症状。在难题上把推理力度设得太低，你会得到一个自信但浅薄的答案，它跳过了问题需要的推理——读起来没问题，但会在以后让你付出代价。为一次单行重命名设成最高，你会坐着等一段很长的思考，产出的东西并不比最低档多。</p>
+<p>让推理力度匹配任务，而不是匹配<a href="#session会话">会话</a>。在真正难推理的部分调高，在周围的例行工作上调回来。</p>
+<p><em>Usage:</em></p>
+<p>“这个并发修复它老是搞砸——我已经解释三遍了。”</p>
+<p>“把推理力度调高。那是一个偏重推理的 bug，默认档位下它没有想足够久就选定了做法。”</p>
+</section>
+<section class="entry" id="token词元">
+<h3>Token（词元）</h3>
+<p>Token 是<a href="#model模型">模型</a>读写的原子单位。它大致相当于一个词，但不完全是——常见词是一个 Token，生僻或很长的词会拆成好几个。<a href="#context-window上下文窗口">上下文窗口</a>的大小、成本和延迟，全都按 Token 计算。</p>
+<p>文本通过分词器变成 Token：分词器是一份固定的词表，包含几万个片段，在<a href="#training训练">训练</a>之前就学好了，能把任何输入切成一段词表条目的序列。模型从来看不到字符或单词——每段文本在输入时被转换成 Token，<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>在输出时一次产出一个 Token。</p>
+<p>按经验，一个 Token 大约是一个英文单词的四分之三，所以一千个 Token 约等于 750 个词。代码更不好预测：常见关键字和惯用写法能被紧凑地分词，而自动生成的标识符、哈希、base64 数据块和压缩后的输出，会按每个“词”拆成很多 Token。规律是：在分词器训练材料里出现得多的文本，会得到又短又高效的编码；没出现过的文本，会被切成许多小块。像 <code>a3f9c2e1</code> 这样的哈希从未在任何地方出现过，所以会被拆成很多 Token，而 <code>function</code> 是一个 Token。这就是为什么一个看起来很小、却塞满不常见字符串的文件，可能占用上下文窗口里出人意料的一大块。</p>
+<p>Token 是衡量其他一切的单位。成本按 Token 计——提供方分别对<a href="#input-tokens输入-token">输入 Token</a>和<a href="#output-tokens输出-token">输出 Token</a>收费。速度是每秒 Token 数，因为输出是一个 Token 一个 Token 生成的。上下文窗口是一个固定的 Token 数，所以你的文件有多少 Token，决定了能装下多少。</p>
+<p><em>Avoid:</em> “词”——Token 的边界和词的边界不重合，真正有意义的单位是每秒 Token 数和每美元 Token 数。</p>
+<p><em>Usage:</em></p>
+<p>“这个提示词会有多大？”</p>
+<p>“用分词器跑一遍——schema 很紧凑，但 JSON 键很怪，会拆成比你想象更多的 Token。”</p>
+</section>
+<section class="entry" id="next-token-prediction下一个-token-预测">
+<h3>Next-token prediction（下一个 Token 预测）</h3>
+<p>下一个 Token 预测是<a href="#model模型">模型</a>实际做的事：给定一份<a href="#context上下文">上下文</a>，它采样出下一个 <a href="#token词元">Token</a>，追加到末尾，然后再次运行。每一个输出——一句话、一次<a href="#tool-call工具调用">工具调用</a>、一个上千行的文件——都是一个 Token 一个 Token 搭起来的。模型没有别的运行方式。</p>
+<p>每一步都一样：<a href="#context-window上下文窗口">上下文窗口</a>里的 Token 穿过<a href="#parameters参数">参数</a>，为词表中的每个 Token 算出一个概率——这个很可能接在后面，那个可能性小一些。按这些概率采样出一个 Token，追加，循环带着略长的上下文再跑一次。正是这个采样步骤，让同一个提示词在不同运行中产出不同结果：<a href="#non-determinism非确定性">非确定性</a>是机制本身的一部分，不是后来叠加的 bug。</p>
+<p>抓住这个机制，就能解释一些本来显得奇怪的行为。模型在吐出每个 Token 之前，从不检查它是否<em>真实</em>——只检查它是否<em>可能</em>——这是<a href="#hallucination幻觉">幻觉</a>的根源。它一边写一边敲定每个 Token，所以一个听起来很自信的开场句，可能把后面的回答带偏。又因为<a href="#output-tokens输出-token">输出 Token</a>严格地一次只产出一个，生成速度给任何<a href="#agent智能体">智能体</a>的工作速度设了下限。</p>
+<p><em>Usage:</em></p>
+<p>“智能体是怎么‘决定’调用工具的？”</p>
+<p>“它没有‘决定’——一路都是下一个 Token 预测。工具调用只是 <a href="#harness">Harness</a> 从输出流里解析出来的一段结构化字符串。”</p>
+</section>
+<section class="entry" id="non-determinism非确定性">
+<h3>Non-determinism（非确定性）</h3>
+<p>同样的输入可能产生不同的输出。把一个<a href="#model模型">模型</a>用相同的<a href="#context上下文">上下文</a>跑两次，你可能会得到两个不同的答案——有时只差一个词，有时是完全不同的思路。你的代码一行都不用改，这事就会发生。</p>
+<p>这是模型生成文本的方式，也是<a href="#model-provider模型提供方">模型提供方</a>处理<a href="#model-provider-request模型提供方请求">请求</a>的方式所决定的。在<a href="#inference推理">推理</a>时，模型对下一个 <a href="#token词元">Token</a> 的各种可能取值产生一个概率分布，然后从中采样——通常是有意保留一些随机性，因为总是挑最可能的 Token 会产生重复、质量更低的文本。回答早期采样出的一个不同 Token，会改变它之后的每一个 Token，一个词的差异就这样变成完全不同的思路。提供方一侧的处理还会叠加更多变化：请求会在共享硬件上合并成批处理，批次之间微小的浮点差异，可能让两个 Token 之间本已接近的取舍倒向另一边。没有什么开关能把这些全部关掉。</p>
+<p>对同一个任务，要预期<a href="#agent智能体">智能体</a>的结果会有波动。大多数回答落在一个合理的质量钟形曲线内——这也是非确定性尚可忍受的原因——但尾部是真实存在的：有些日子模型显得很敏锐，有些日子它像丢了思路。同样的任务，不同的掷骰子结果。这有两个实际后果。重试是合理策略：失败的尝试只是分布里的一次抽样，同一任务重新来一次，可能就落得更好。验证也比使用确定性工具时更重要——你不能测一次智能体的行为，就指望它每次都一样，所以<a href="#automated-check自动化检查">自动化检查</a>必须抓住那些坏抽样。</p>
+<p>也别急着把它编成一个故事。人是模式匹配机器，一连串糟糕的运行会让人觉得“这周模型变差了”。通常那只是分布。</p>
+<p><em>Usage:</em></p>
+<p>“Claude 今天很糟。他们是不是发了个更差的版本？”</p>
+<p>“大概不是——模型输出是非确定性的。同一个任务，你会有好日子和坏日子。明天再试一次，再去找原因。”</p>
+</section>
+<section class="entry" id="model-provider模型提供方">
+<h3>Model provider（模型提供方）</h3>
+<p>模型提供方是为<a href="#model模型">模型</a>提供<a href="#inference推理">推理</a>服务的任何一方。通常是远程服务（Anthropic、OpenAI、Google），也可以是本地的——跑在你自己机器上的 Ollama、LM Studio、llama.cpp。<a href="#harness">Harness</a>本身不运行模型；它请提供方来运行。</p>
+<p>提供方拥有这套机器：<a href="#parameters参数">参数</a>放在它的硬件上，每一次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>都是 Harness 通过网络发送 <a href="#token词元">Token</a>、再拿回预测。这让提供方成为一整类问题的来源，而这些问题常被错怪到模型或 Harness 头上——速率限制、容量下降和故障都出在这里。当<a href="#agent智能体">智能体</a>在<a href="#session会话">会话</a>中途卡住，或者每个<a href="#turn轮次">轮次</a>都报错时，先查提供方的状态页，再查别的。</p>
+<p>提供方还决定商业条款：对<a href="#input-tokens输入-token">输入 Token</a>和<a href="#output-tokens输出-token">输出 Token</a>按 Token 定价、<a href="#prefix-cache前缀缓存">前缀缓存</a>折扣，以及究竟有哪些模型可用。注意，提供方和模型的制造方可能是不同公司——Bedrock、Vertex 和 OpenRouter 提供的是别人的模型。</p>
+<p>本地提供方用能力换控制：能装进你自己硬件的模型，比前沿模型小得多，但数据不出机器，也没有按 Token 的账单。</p>
+<p><em>Usage:</em></p>
+<p>“能把这个离线跑给隔离网络的客户吗？”</p>
+<p>“把模型提供方换成本地的——在他们机器上跑 Ollama 或 llama.cpp。Harness 不关心，它只是打到另一个端点。”</p>
+</section>
+<section class="entry" id="harness">
+<h3>Harness</h3>
+<p>Harness 是<a href="#model模型">模型</a>周围、把它变成<a href="#agent智能体">智能体</a>的一切：<a href="#tool工具">工具</a>、<a href="#system-prompt系统提示词">系统提示词</a>、<a href="#context-window上下文窗口">上下文窗口管理</a>、权限、钩子。<strong>Claude.ai</strong> 和 <strong>Claude Code</strong> 跑在同一个模型上，行为却不同，因为它们的 Harness 不一样。</p>
+<p>模型本身只做一件事：输入文本，输出文本。它不能读文件、运行命令，也记不住上一个<a href="#turn轮次">轮次</a>。Harness 补上了这一切。它为每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>组装<a href="#context上下文">上下文</a>，执行模型要求的<a href="#tool-call工具调用">工具调用</a>，把<a href="#tool-result工具结果">工具结果</a>送回模型，保存<a href="#session会话">会话</a>历史，在危险操作前向你请求许可，并决定何时<a href="#compaction压缩">压缩</a>。智能体循环——模型提议、Harness 执行、重复——由 Harness 运行。</p>
+<p>这对诊断很重要。当两个产品的行为不同，或者昨天和今天不同，模型往往不是变量——Harness 才是。换一个系统提示词、换一组工具、改一个权限默认值，或者换一种上下文管理策略，都能在不改模型的情况下改变行为。这也意味着你的大部分配置都在 Harness 里：<a href="#agentsmd">AGENTS.md</a> 文件、权限设置和钩子，都是给 Harness 的指令，不是给模型的。</p>
+<p>例子：Claude Code、Cursor、Codex CLI——以及 Claude.ai，它是聊天 Harness，而不是编码 Harness。</p>
+<p><em>Usage:</em></p>
+<p>“同一个模型，为什么 Claude Code 在改文件，Claude.ai 只是回答问题？”</p>
+<p>“Harness 不同——Claude Code 有<a href="#filesystem文件系统">文件系统</a>工具、不同的系统提示词，还有一层权限。这里变的不是模型。”</p>
+</section>
+<section class="entry" id="model-provider-request模型提供方请求">
+<h3>Model provider request（模型提供方请求）</h3>
+<p>模型提供方请求是从 <a href="#harness">Harness</a> 到<a href="#model-provider模型提供方">模型提供方</a>的一次往返。Harness 发送当前的<a href="#context上下文">上下文</a>；提供方返回一个响应（一次<a href="#tool-call工具调用">工具调用</a>或一个最终答案）。如果<a href="#agent智能体">智能体</a>调用了<a href="#tool工具">工具</a>，一条用户消息可以引发很多次模型提供方请求——每个<a href="#tool-result工具结果">工具结果</a>都会触发下一次请求。</p>
+<p>每次请求都携带全部内容：<a href="#system-prompt系统提示词">系统提示词</a>、到目前为止的完整对话、每一个工具结果。<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的，所以提供方在请求之间不保留任何东西——第四十次请求会把第三十九次发过的内容再发一遍，外加一个新的工具结果。<a href="#prefix-cache前缀缓存">前缀缓存</a>存在的意义，就是让这种重复变得负担得起。</p>
+<p>请求也是计费单位。<a href="#input-tokens输入-token">输入 Token</a>、<a href="#output-tokens输出-token">输出 Token</a>和缓存折扣都按请求计算，这就是为什么一个看似无害的问题可能花掉惊人的钱：成本不与你的消息成正比，而与请求次数乘以每次携带的上下文大小成正比。</p>
+<p>值得把请求和<a href="#turn轮次">轮次</a>区分开。一个轮次是你和模型的一次交互，而一个轮次——“修好失败的测试”——会展开成一串请求：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>请求</th><th>模型返回</th><th>Harness 随后</th></tr></thead>
+<tbody><tr><td>1</td><td>工具调用：运行测试</td><td>运行测试，追加失败输出</td></tr>
+<tr><td>2</td><td>工具调用：读取测试文件</td><td>追加文件内容</td></tr>
+<tr><td>3</td><td>工具调用：读取源文件</td><td>追加文件内容</td></tr>
+<tr><td>4</td><td>工具调用：编辑源文件</td><td>应用编辑，追加结果</td></tr>
+<tr><td>5</td><td>工具调用：再次运行测试</td><td>运行测试，追加通过输出</td></tr>
+<tr><td>6</td><td>最终回答：“已修好，测试通过”</td><td>展示给你看</td></tr></tbody>
+</table>
+</div>
+<p>一个轮次六次请求——每一次都重发整个上下文。当你纳闷 <a href="#token词元">Token</a> 都去哪了，数请求，别数轮次。</p>
+<p><em>Usage:</em></p>
+<p>“一个问题烧掉了四万 Token？”</p>
+<p>“看看工具调用——十二次 grep、八次读取、四次编辑。每个工具结果都会引发另一次模型提供方请求，而整个<a href="#session会话">会话</a>前缀每次都重发。”</p>
+</section>
+<section class="entry" id="input-tokens输入-token">
+<h3>Input tokens（输入 Token）</h3>
+<p>输入 Token 是 <a href="#harness">Harness</a> 在每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>中发送的 <a href="#token词元">Token</a>——<a href="#system-prompt系统提示词">系统提示词</a>、对话历史、<a href="#tool-result工具结果">工具结果</a>，以及<a href="#model模型">模型</a>在开始写之前读到的一切。它们的计费单价低于<a href="#output-tokens输出-token">输出 Token</a>，因为处理起来比输出便宜。</p>
+<p>做 <a href="#ai人工智能">AI</a> 编程时，输入 Token 占账单的大头。模型是<a href="#stateless无状态">无状态</a>的，所以每个<a href="#turn轮次">轮次</a>都会把整个<a href="#session会话">会话</a>作为输入重发一遍：你的第一条消息、每一个回答、之后的每一个工具结果。第五十个轮次的输入里包含之前四十九个轮次。一次模型提供方请求可能只产出几百个输出 Token，却重发十万个积累历史的输入 Token。</p>
+<p><a href="#prefix-cache前缀缓存">前缀缓存</a>降低成本：与之前请求完全一致的历史，会按便宜的<a href="#cache-tokens缓存-token">缓存 Token</a>计费，而不是全价输入。当输入成本仍然让人吃不消时，办法是缩小重发的内容——在任务之间<a href="#clearing清空上下文">Clearing</a>或<a href="#compaction压缩">压缩</a>。</p>
+<p><em>Usage:</em></p>
+<p>“账单很高，但<a href="#agent智能体">智能体</a>几乎没写什么。”</p>
+<p>“是输入 Token——每个轮次都重发整个会话。没有前缀缓存，你每次请求都要为历史重新付一遍钱。”</p>
+</section>
+<section class="entry" id="output-tokens输出-token">
+<h3>Output tokens（输出 Token）</h3>
+<p>输出 Token 是<a href="#token词元">Token</a> 中由<a href="#model模型">模型</a>生成回来的那部分。它的计费单价高于<a href="#input-tokens输入-token">输入 Token</a>——常见情况是五倍左右——因为生成它们要花更多算力。</p>
+<p>模型写下的一切都算：你读到的正文、它输出的代码、<a href="#tool-call工具调用">工具调用</a>，以及它在回答前做的任何扩展思考。最后一项常让人意外——推理 Token 按输出计费，即使 <a href="#harness">Harness</a> 通常不把它们展示给你，而调高<a href="#effort推理力度">推理力度</a>会花掉更多这类 Token。</p>
+<p>输出 Token 也决定了<a href="#session会话">会话</a>的节奏。模型读输入很快，但生成输出是一次一个 Token，所以当一个<a href="#turn轮次">轮次</a>显得很慢时，几乎总是输出在写，而不是输入在读。等得久，通常意味着答案很长。</p>
+<p><em>Usage:</em></p>
+<p>“这次重构会话的额度烧得飞快，明明输入很小。”</p>
+<p>“智能体在重写整个文件，而不是打补丁。输出 Token 的单价大约是输入的五倍——让它输出编辑操作，账单就会降下来。”</p>
+</section>
+<section class="entry" id="prefix-cache前缀缓存">
+<h3>Prefix cache（前缀缓存）</h3>
+<p>前缀缓存是<a href="#model-provider模型提供方">模型提供方</a>一侧的存储，让连续的<a href="#model-provider-request模型提供方请求">模型提供方请求</a>跳过对共享前缀的重复处理。当一次请求的开头与最近一次请求的开头一致——相同的<a href="#system-prompt系统提示词">系统提示词</a>、相同的历史直到某个点——提供方就复用之前的工作，把这些 <a href="#token词元">Token</a> 按<a href="#cache-tokens缓存-token">缓存 Token</a>的更低单价计费。</p>
+<p>缓存之所以划算，是因为会话只在末尾追加内容。每次请求都把整个历史作为<a href="#input-tokens输入-token">输入 Token</a>重发（原因见那一条），而在正常的<a href="#session会话">会话</a>里，历史只在末尾变化——每次请求都是上一次请求加上几条新消息。提供方把那段很长的共享开头处理一次，存下结果，然后从前缀结束的地方接着做。没有缓存的话，一个 50 <a href="#turn轮次">轮次</a>的会话，第一轮的处理费要付五十遍。</p>
+<p>缓存也会过期。缓存条目能保持有效多久因模型提供方而异——通常是几分钟，而不是几小时。让会话闲置超过这个窗口，下一次请求会先按全价重建前缀一次，然后缓存才恢复。这主要是 <a href="#harness">Harness</a> 构建者关心的事；作为用户，看得见的效应是长时间停顿之后的请求比之前更贵。</p>
+<p><em>Usage:</em></p>
+<p>“为什么账单在会话进行到一半时突然涨了？”</p>
+<p>“Harness 开始每个轮次都把当前时间注入系统提示词。前缀缓存在第一个变化的 Token 处就断了，所以之后每次请求都按全价计费。”</p>
+</section>
+<section class="entry" id="cache-tokens缓存-token">
+<h3>Cache tokens（缓存 Token）</h3>
+<p>缓存 Token 是<a href="#input-tokens输入-token">输入 Token</a> 中由<a href="#model-provider模型提供方">提供方</a>从之前的<a href="#model-provider-request模型提供方请求">模型提供方请求</a>里缓存下来的那部分，这样就不必重新处理。当连续请求共享同一个前缀时，提供方通过<a href="#prefix-cache前缀缓存">前缀缓存</a>复用之前的工作，对缓存的那部分按低得多的单价计费。这是让长<a href="#session会话">会话</a>负担得起的杠杆——没有它，每个<a href="#turn轮次">轮次</a>都要为整段历史重新付钱。</p>
+<p>这件事重要，原因在于会话是如何计费的。<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的，所以每次请求都把整段对话——<a href="#system-prompt系统提示词">系统提示词</a>、每条消息、每个<a href="#tool-result工具结果">工具结果</a>——作为输入 Token 重发一遍。到第五十个轮次，每次请求都携带五十个轮次的历史，而你要为所有这一切按全价付费，每一次都如此。缓存改变了这笔账：提供方在完全一致的前缀里已经处理过的 Token，按缓存 Token 计费，单价往往只有输入价的十分之一甚至更低。在长会话里，你发送的大部分内容都是缓存 Token，账单就保持正常。</p>
+<p>一个例子能说明 Token 何时被缓存、何时不被缓存。每个字母代表一块对话内容；每次请求发送到目前为止的对话：</p>
+<div class="table-wrap">
+<table style="min-width:28rem">
+<thead><tr><th>请求发送</th><th>已缓存</th><th>按全价计费</th><th>原因</th></tr></thead>
+<tbody><tr><td><code>AB</code></td><td>无</td><td><code>AB</code></td><td>第一次请求——没有可匹配的内容</td></tr>
+<tr><td><code>ABC</code></td><td><code>AB</code></td><td><code>C</code></td><td><code>AB</code> 是上一次请求的精确前缀</td></tr>
+<tr><td><code>ABCD</code></td><td><code>ABC</code></td><td><code>D</code></td><td>前缀仍然完整</td></tr>
+<tr><td><code>AXCD</code></td><td><code>A</code></td><td><code>XCD</code></td><td>一次编辑把 <code>B</code> 改成 <code>X</code>；匹配在那里断开</td></tr></tbody>
+</table>
+</div>
+<p>缓存的脆弱之处很具体：它只匹配精确前缀。如果对话中更早的地方有东西变了——<a href="#harness">Harness</a>重排了内容、一个时间戳更新了、文件的表示形式变了——缓存从那个点往后全部失效，之后的一切都按全价输入计费。缓存还会在几分钟不活动后过期，所以长时间暂停后恢复的会话，要重新为历史付一次钱。当会话成本莫名跳升时，先比较用量报告里的缓存 Token 和输入 Token——缓存坏了，那里最先显形。</p>
+<p><em>Usage:</em></p>
+<p>“长会话的成本太狠了——一次重构八美元。”</p>
+<p>“查一下缓存 Token。如果 Harness 在轮次之间重排系统提示词或文件，前缀就断了，你每次请求都要重新按全价付输入费。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 2 — Sessions, Context Windows &amp; Turns（会话、上下文窗口与轮次）</h2>
+<section class="entry" id="stateless无状态">
+<h3>Stateless（无状态）</h3>
+<p>不携带任何信息到下一步。<a href="#model模型">模型</a>在<a href="#model-provider-request模型提供方请求">模型提供方请求</a>之间是无状态的——每次请求都重发完整的<a href="#context-window上下文窗口">上下文窗口</a>，因为模型没有别的办法看到内容。一个<a href="#agent智能体">智能体</a>默认在<a href="#session会话">会话</a>之间也是无状态的：新会话从空开始，没有之前任何会话的痕迹。它是<a href="#stateful有状态">有状态</a>的反面。</p>
+<p>模型本身永远是无状态的：它的<a href="#parameters参数">参数</a>在<a href="#training训练">训练</a>之后就冻结了，你在<a href="#inference推理">推理</a>时做的任何事都改不了它们。模型不会从你的纠正里学习，不记得昨天被告知过同样的事，也不会逐渐了解你——不管对话给人的感觉多么像是在记住你。会话内的连续感是 <a href="#harness">Harness</a> 制造出来的：它保存对话记录，并在每次请求时重新发送。模型不是在记住对话，而是在重读对话。</p>
+<p>实际后果是：如果你希望某件事跨会话被记住，就得把它写在智能体会读回来的地方。<a href="#agentsmd">AGENTS.md</a> 文件、<a href="#memory-system记忆系统">记忆系统</a>和<a href="#handoff-artifact交接产物">交接产物</a>就是干这个的——这些文件会被载入未来会话的<a href="#context上下文">上下文</a>，顶替模型没有的记忆。当智能体反复犯一个你已经纠正过的错误时，问题不是它为什么不学——它学不了——而是这条纠正该写在哪里，好让之后每个会话都读到。</p>
+<p><em>Usage:</em></p>
+<p>“为什么我每次 <a href="#clearing清空上下文">Clearing</a> 之后，它都会忘掉那个约定？”</p>
+<p>“模型是无状态的——新会话从空开始。如果你想让它带过去，就写进 AGENTS.md，或者写进某个 Harness 在会话开始时加载的记忆文件。”</p>
+</section>
+<section class="entry" id="context上下文">
+<h3>Context（上下文）</h3>
+<p>上下文是<a href="#agent智能体">智能体</a>此刻能访问的相关信息。它是那个抽象名词——不是模型看到的原始输入（那是<a href="#context-window上下文窗口">上下文窗口</a>），不是当前不断累积的对话历史（那是<a href="#session会话">会话</a>），而是<em>智能体知道的、与任务有关的内容</em>。“把某个东西载入上下文”意思是让它成为这个集合的一部分；“上下文工程”是筛选上下文的实践。</p>
+<p>这三个词分得很清楚：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>术语</th><th>指什么</th></tr></thead>
+<tbody><tr><td>Context</td><td>智能体当前拥有的、与任务相关的信息</td></tr>
+<tr><td>Context window</td><td>模型每次请求看到的、字面意义上的 <a href="#token词元">Token</a> 序列</td></tr>
+<tr><td>Session</td><td><a href="#harness">Harness</a> 保存的正在进行的对话</td></tr></tbody>
+</table>
+</div>
+<p>分开它们很重要，因为上下文衡量的是质量，不是数量。上下文窗口可以几乎装满，而上下文仍然很差——几千个 Token 的过期工具输出，没有一条与手头的任务有关。它也可以几乎为空，而上下文极好：任务所依赖的那一个类型定义。</p>
+<p>大多数日常故障都能追溯到上下文。当智能体编造一个 API、与某个决定相矛盾，或者猜测 schema 时，第一个问题是它这么做的时候上下文里有什么——通常相关事实根本没载入，或者被<a href="#attention-degradation注意力退化">注意力退化</a>埋住了。解决办法是筛选：载入任务需要的东西，把不需要的挡在外面。</p>
+<p><em>Usage:</em></p>
+<p>“它一直在编造类型里没有的字段。”</p>
+<p>“类型文件不在上下文里——它在读调用点然后猜。先把定义读进去。”</p>
+</section>
+<section class="entry" id="context-window上下文窗口">
+<h3>Context window（上下文窗口）</h3>
+<p>上下文窗口是<a href="#model模型">模型</a>在每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>中看到的全部内容。它有限、因模型而异，而且是模型感知任何事物的<em>唯一</em>通道。</p>
+<p>它是一段 <a href="#token词元">Token</a> 序列：<a href="#system-prompt系统提示词">系统提示词</a>、到目前为止的对话、<a href="#harness">Harness</a> 回灌的每一个<a href="#tool-result工具结果">工具结果</a>。如果某个东西在这段序列里，模型就能用它；如果不在，模型就不知道它存在——不知道你的代码库，不知道你昨天改的文件，也不知道你三个会话前给的指令。窗口之外的一切都必须被带进来，通常通过一次<a href="#tool-call工具调用">工具调用</a>，才可能产生影响。</p>
+<p>有限意味着它会装满。每个轮次都会追加更多——你的消息、模型的回答、工具结果——一个长<a href="#session会话">会话</a>最终会撞到上限，迫使你<a href="#compaction压缩">压缩</a>或执行 <a href="#clearing清空上下文">Clearing</a>。这也意味着窗口里的一切都在竞争：你载入的每个 Token 都让其余内容少一个位置，你不需要的内容仍然占着模型的<a href="#attention-budget注意力预算">注意力</a>。实际做法是把窗口当成预算——载入任务需要的，其余留在外面。</p>
+<p><em>Avoid:</em> “memory”——上下文窗口是工作状态，不跨会话持久化。<a href="#memory-system记忆系统">记忆</a>是叠加在上面的另一个概念。</p>
+<p><em>Usage:</em></p>
+<p>“我能直接把整个 monorepo 粘进提示词吗？”</p>
+<p>“上下文窗口是 200k Token——那大概是仓库的五分之一。挑任务涉及的文件，其余的先不载入，需要时再通过工具调用取回。”</p>
+</section>
+<section class="entry" id="stateful有状态">
+<h3>Stateful（有状态）</h3>
+<p>有状态是把信息带到下一步。<a href="#session会话">会话</a>在<a href="#turn轮次">轮次</a>之间是有状态的——随着会话进行，<a href="#context上下文">上下文</a>不断累积，这就是长会话会漂进<a href="#smart-zone智能区">迟钝区</a>的原因。一个<a href="#agent智能体">智能体</a>可以通过加入<a href="#memory-system记忆系统">记忆系统</a>变成跨<strong>会话</strong>有状态：记忆系统把信息持久化到<a href="#environment环境">环境</a>里，并在未来会话开始时重新载入。<a href="#model模型">模型</a>从来不是有状态的；任何看似连续的表现，都是 <a href="#harness">Harness</a> 在重新投喂上下文。它和<a href="#stateless无状态">无状态</a>相对。</p>
+<p>状态在各层分别放在哪里：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>层</th><th>有状态？</th><th>如何实现</th></tr></thead>
+<tbody><tr><td>模型</td><td>从不</td><td><a href="#parameters参数">参数</a>冻结；它只看到每次请求里的内容</td></tr>
+<tr><td>会话</td><td>跨轮次</td><td>Harness 把每条消息和<a href="#tool-result工具结果">工具结果</a>追加到上下文</td></tr>
+<tr><td>Harness</td><td>跨会话</td><td>记忆文件、<a href="#agentsmd">AGENTS.md</a>、<a href="#handoff-artifact交接产物">交接产物</a>——写下来，之后重新载入</td></tr>
+<tr><td>环境</td><td>始终</td><td>无论是否有会话在运行，文件都保留</td></tr></tbody>
+</table>
+</div>
+<p>每一层的状态性都是通过重读下一层存储的东西实现的：会话之所以感觉连续，是因为 Harness 把消息历史重新发给无状态的模型；智能体之所以能跨会话记住，是因为 Harness 从环境里重新加载文件。模型本身从不保存任何状态。</p>
+<p>状态并不总是想要的。一切被带到下一步的东西都会影响后面的结果，所以会话早期的一个错误假设也会被带下去。<a href="#clearing清空上下文">Clearing</a> 是主动扔掉会话状态、从已经写下来的东西重新开始的动作。</p>
+<p><em>Usage:</em></p>
+<p>“它记住了我昨天的偏好——这是说模型学会了吗？”</p>
+<p>“不是，智能体之所以有状态，是因为 Harness 把偏好写进记忆文件，并在会话开始时重新加载。模型本身对昨天一无所知。”</p>
+</section>
+<section class="entry" id="agent智能体">
+<h3>Agent（智能体）</h3>
+<p>智能体是一个<a href="#model模型">模型</a>：它被 <a href="#harness">Harness</a> 配上<a href="#tool工具">工具</a>、<a href="#system-prompt系统提示词">系统提示词</a>和<a href="#context-window上下文窗口">上下文窗口</a>，与用户按<a href="#turn轮次">轮次</a>交替。<em>Claude Code 是一个智能体。Cursor 是一个智能体。Claude.ai 是一个智能体。</em> 智能体才是你实际对话的对象——它是运转中的模型，为某个目的配置好。</p>
+<p>和这个词典里的大多数术语不同，“智能体”并不指某个机械部件。模型是一份<a href="#parameters参数">参数</a>文件；Harness 是一层你能直接指出来的软件。智能体两者都不是——它是你正在对话的那个对象。人们总把 <a href="#ai人工智能">AI</a> 拟人化，而智能体就是被拟人化的那个对象：你委派任务的那个东西，读取你的消息并作答的那个东西，“它又把构建搞坏了”里的那个“它”。当你说智能体做了什么，你的意思是模型加 Harness 做了这件事，但你把这个组合当成一个行动者来称呼。</p>
+<p>这个想法比这波 AI 更早。软件智能体——你委派一个目标、它代你行动的程序——在 AI 存在的整个时期都是一个概念。</p>
+<p><em>Avoid:</em> “the AI”“the bot”（太模糊——它们掩盖了你指的是参数，还是被 Harness 驱动的那个东西）。</p>
+<p><em>Usage:</em></p>
+<p>“你迁移用哪个智能体？”</p>
+<p>“本地用 Claude Code，UI 部分用 Cursor——底下的模型一样，Harness 不同。”</p>
+</section>
+<section class="entry" id="system-prompt系统提示词">
+<h3>System prompt（系统提示词）</h3>
+<p>系统提示词是 <a href="#harness">Harness</a> 附加在每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>前的指令——<a href="#agent智能体">智能体</a>的常设说明：它是谁、该怎么表现、能调用哪些<a href="#tool工具">工具</a>、遵循什么约定。它通常在一个<a href="#session会话">会话</a>内保持不变。</p>
+<p>系统提示词由 Harness 厂商写，不是你写的；在编码 Harness 里它很大——常常是几万个 <a href="#token词元">Token</a> 的行为规则、工具说明和边界情况处理，每个<a href="#turn轮次">轮次</a>都按<a href="#input-tokens输入-token">输入 Token</a>计费。你自己的常设指令也随它一起送达：<a href="#agentsmd">AGENTS.md</a> 这类文件会在会话开始时与系统提示词一并载入，所以<a href="#model模型">模型</a>在看到你的消息之前，已经一起读了厂商的说明和你的说明。</p>
+<p>因为它在每次请求里完全相同，它构成了<a href="#prefix-cache前缀缓存">前缀缓存</a>的开头——这也是 Harness 在整个会话里保持它不变、而不是边走边改的部分原因。</p>
+<p>模型被训练成优先服从系统提示词，而不是用户消息。所以当一个智能体坚持一条你从未要求过的约定，或者用某种你改不掉的方式格式化输出时，它通常是在服从自己的系统提示词——你的消息在争论中输了。有些 Harness 可定制：它们把系统提示词完全开放给你，你可以读到智能体实际被告知了什么，并改掉它。</p>
+<p><em>Usage:</em></p>
+<p>“两个 Harness，同一个模型，同一个提示词，行为完全不同。”</p>
+<p>“系统提示词不同。一个为简洁的代码编辑调过，另一个为解释调过——分歧就在这里，在你的消息到达之前就存在了。”</p>
+</section>
+<section class="entry" id="session会话">
+<h3>Session（会话）</h3>
+<p>会话是与<a href="#agent智能体">智能体</a>的一段有边界的交互运行。它从空开始，累积消息、<a href="#tool-result工具结果">工具结果</a>和读过的文件，并在被 <a href="#clearing清空上下文">Clearing</a> 清空、关闭或<a href="#compaction压缩">压缩</a>成新会话时结束。会话是<em>装满</em><a href="#context-window上下文窗口">上下文窗口</a>的东西：如果上下文窗口是箱子，会话就是慢慢把它填满的内容。单个上下文窗口装不下的工作，必须拆到多个会话里。</p>
+<p>会话的消息历史就是智能体的工作记忆。<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的，所以它看起来记住的一切——你要求过什么、测试说了什么、它三个轮次之前决定了什么——都在消息历史里，随每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>重发。不在会话里的东西，对智能体来说就不存在。</p>
+<p>这份记忆随会话结束而结束。新会话从零开始：昨天会话结束时很了解你代码库的智能体，今天早上对它一无所知。留下来的东西是<a href="#filesystem文件系统">文件系统</a>——一个会话里写下的文件，下一个会话可以读到，<a href="#handoff交接">交接</a>、<a href="#memory-system记忆系统">记忆系统</a>和 <a href="#agentsmd">AGENTS.md</a> 都依赖这一点。</p>
+<p>在哪里结束会话由你决定。会话里的一切都会影响之后的每个<a href="#turn轮次">轮次</a>，所以在同一个会话里做不相关的任务，会留下残余，给下一个回答染上底色。一个会话只做一个任务，能让上下文保持相关；完成一个任务，是清空的自然时机。</p>
+<p><em>Usage:</em></p>
+<p>“一个会话能跑多久才开始散架？”</p>
+<p>“取决于工作——一次专注的重构比开放式研究保持敏锐更久。一旦会话膨胀，就交接或压缩，不要硬撑。”</p>
+</section>
+<section class="entry" id="turn轮次">
+<h3>Turn（轮次）</h3>
+<p>轮次是一条用户消息，加上<a href="#agent智能体">智能体</a>在把控制权交还给你之前所做的一切。它包含一次或多次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>——如果智能体调用了<a href="#tool工具">工具</a>，就是很多次。一个澄清问题会结束这个轮次；你的回复开启下一个。层级关系是<a href="#session会话">会话</a> <strong>&gt; 轮次 &gt; 模型提供方请求</strong>。</p>
+<p>值得给轮次命名，是因为它的长度由智能体决定，而不是你。你交给它一条消息；智能体决定在交还之前串起多少次工具调用。一个轮次可以是一句话的回答，也可以是二十分钟的读取、编辑和运行测试。这是同一性质的两个侧面：长轮次让 <a href="#afk离开键盘">AFK</a> 工作成为可能，长轮次也是无人监督时出问题的地方——等智能体交还时，它可能已经偏离你的本意很远了。</p>
+<p>轮次也是引导的自然单位。轮次内的一切都在没有你的情况下发生；轮次之间的空隙，才是你重新指方向的地方。大多数 <a href="#harness">Harness</a> 会缓和这一点：你可以在轮次中途打断，停下智能体并改变方向，或者在它工作时输入一条消息，这条消息会在轮次结束后被读到。如果你反复对轮次最后停在哪里不满意，办法通常是要求更小的轮次——先给计划，一步一步来——牺牲一部分自主权，换取更频繁的引导机会。</p>
+<p><em>Usage:</em></p>
+<p>“一个轮次花了两分钟？”</p>
+<p>“它在一个轮次里做了十四次<a href="#tool-call工具调用">工具调用</a>——每一次都是一次单独的模型提供方请求。延迟会不断叠加，直到智能体终于交还给你。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 3 — Tools &amp; Environment（工具与环境）</h2>
+<section class="entry" id="environment环境">
+<h3>Environment（环境）</h3>
+<p>环境是<a href="#agent智能体">智能体</a>行动所处的世界——<a href="#harness">Harness</a>之外、智能体通过<a href="#tool-result工具结果">工具结果</a>感知、通过<a href="#tool-call工具调用">工具调用</a>改变的一切。Harness <em>运行</em>智能体；环境是智能体<em>在其中工作</em>的地方。像 <a href="#agentsmd"><code>AGENTS.md</code></a> 这样的文件住在环境里；Harness 负责把它载入<a href="#context-window上下文窗口">上下文窗口</a>。<a href="#filesystem文件系统">文件系统</a>是最常见的一种环境，但不是唯一一种（数据库、远程 API、浏览器会话都可以是环境）。</p>
+<p>智能体只有在看的时候才看得见环境。它关于环境所知的一切都来自某次工具结果，所以它的图景是一组快照，每一张在拍摄那一刻是准确的。如果某个文件在智能体读过之后变了——你手动改了它，某个构建步骤重新生成了它——智能体会继续拿过期副本推理，直到有什么促使它重读。一个智能体自信地描述一个早就不再是那样的文件，通常就是这种情况：环境动了，快照没动。</p>
+<p>环境也是会持续存在的那一层——唯一始终<a href="#stateful有状态">有状态</a>的一层。<a href="#session会话">会话</a>的上下文在会话结束时消失，但写到环境里的文件会留给下一个会话读取——<a href="#memory-system记忆系统">记忆系统</a>、<a href="#handoff-artifact交接产物">交接产物</a>和 <code>AGENTS.md</code> 都依赖这一点。智能体明天还应该知道的东西，最终必须落到环境里。</p>
+<p>环境有多大由你决定。<a href="#sandbox沙箱">沙箱</a>把它缩小，限制智能体能触及的范围；增加一个<a href="#tool工具">工具</a>会把它扩大，让数据库或 API 进入触及范围。边界之内是智能体能感知和改变的东西；边界之外对智能体来说不存在。环境为智能体的工作准备得如何，就是代码库的 <a href="#ax智能体体验">AX</a>。</p>
+<p><em>Avoid:</em> 用“环境”指运行时或 Harness 本身——Harness 是外壳，环境是工作区。</p>
+<p><em>Usage:</em></p>
+<p>“智能体看不到 staging 数据库的 schema。”</p>
+<p>“把它接进环境——给它一个只读访问 staging 的 <code>psql</code> 工具。Harness 没问题，它只是没有可操作的东西。”</p>
+</section>
+<section class="entry" id="filesystem文件系统">
+<h3>Filesystem（文件系统）</h3>
+<p>文件系统是<a href="#agent智能体">智能体</a>读取、写入并在其中执行的文件与目录树——编码智能体默认的那类<a href="#environment环境">环境</a>。<a href="#agentsmd">AGENTS.md</a>、<a href="#skill技能">Skill</a>、源代码、构建脚本和<a href="#tool工具">工具</a>配置都住在文件系统里。当<a href="#harness">Harness</a>“在你的项目里启动”时，它是在把智能体指向一个文件系统。</p>
+<p>智能体只通过<a href="#tool-call工具调用">工具调用</a>接触它——读一个文件、写一个文件、运行一条 shell 命令。磁盘上的东西在被工具调用载入之前，都不在<a href="#context-window上下文窗口">上下文窗口</a>里；正因如此，智能体才能在一个远大于窗口的仓库里工作：文件系统装着一切，上下文只装当前任务读过的东西。有些 Harness 默认会把当前目录的文件名载入上下文窗口——不是内容，只是目录树——它们充当<a href="#context-pointer上下文指针">上下文指针</a>：智能体看到有什么，再去读需要的文件。</p>
+<p>而且它是与你共享的。智能体编辑的文件，就是你在编辑器里打开、在 git 里对比的同一批文件——文件系统是你们共同的工作区，你在这里检查智能体做了什么。</p>
+<p><em>Usage:</em></p>
+<p>“它为什么没识别到我的 AGENTS.md？”</p>
+<p>“它在另一个文件系统上运行——<a href="#sandbox沙箱">沙箱</a>挂载的是上级目录，不是项目根目录。把 Harness 重新指过去。”</p>
+</section>
+<section class="entry" id="tool工具">
+<h3>Tool（工具）</h3>
+<p>工具是 <a href="#harness">Harness</a> 暴露给<a href="#agent智能体">智能体</a>调用的函数——Read、Write、Bash、Search。智能体通过工具感知和作用于<a href="#environment环境">环境</a>：除了<a href="#tool-result工具结果">工具结果</a>，它看不到环境；除了<a href="#tool-call工具调用">工具调用</a>，它改变不了环境。每次工具调用都要多花一次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>，因为结果必须先回到模型，它才能决定下一步做什么。</p>
+<p>大多数编码智能体自带的工具：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>工具</th><th>做什么</th></tr></thead>
+<tbody><tr><td>Read</td><td>把文件内容作为工具结果返回</td></tr>
+<tr><td>Write</td><td>在<a href="#filesystem文件系统">文件系统</a>里创建或编辑文件</td></tr>
+<tr><td>Bash</td><td>运行 shell 命令并返回输出</td></tr>
+<tr><td>Search</td><td>在代码库里查找匹配某个模式的文件或文本</td></tr></tbody>
+</table>
+</div>
+<p>一个工具由三样东西定义：名称、说明它做什么的描述，以及参数 schema。Harness 在每次请求时把这些定义发给<a href="#model模型">模型</a>，模型选择工具的方式和它产生其他一切的方式一样——写出 <a href="#token词元">Token</a>，在这里是一次带参数的结构化调用。模型自己从不执行任何东西；Harness 读取调用，运行函数，再把结果送回。</p>
+<p>工具清单决定了智能体能做什么。一个能力很强的模型配上很窄的工具集，就是一个很窄的智能体：它会把一切都经由手头现有的工具完成，这就是智能体为什么如此依赖 Bash——一个 shell 工具就能触及系统的大部分。要给智能体一项能力，干净的做法是为它加一个工具；<a href="#mcp模型上下文协议">MCP</a> 是从 Harness 外部接入工具的标准。</p>
+<p>工具定义在每次请求中都占用<a href="#context上下文">上下文</a>，所以工具集很大时，在调用任何工具之前就有一笔常驻开销——而且许多描述相似的工具会让模型更难选对。</p>
+<p><em>Usage:</em></p>
+<p>“智能体能直接查询 staging 吗？”</p>
+<p>“在 Harness 里加一个 <code>psql</code> 工具，限定为只读访问 staging。没有对应的工具，智能体对文件系统之外的一切都是瞎的。”</p>
+</section>
+<section class="entry" id="tool-call工具调用">
+<h3>Tool call（工具调用）</h3>
+<p><a href="#model模型">模型</a>的输出，指明一个<a href="#tool工具">工具</a>及其参数——只是一段结构化文本。它自己什么也不做；<a href="#harness">Harness</a>必须读取并执行。它在一次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>中由模型产生。</p>
+<p>工具调用的生命周期：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>步骤</th><th>谁</th><th>发生什么</th></tr></thead>
+<tbody><tr><td>1</td><td>模型</td><td>从<a href="#system-prompt系统提示词">系统提示词</a>里的描述得知有哪些工具</td></tr>
+<tr><td>2</td><td>模型</td><td>发出一次调用——工具名加参数，通常是 JSON——然后停下</td></tr>
+<tr><td>3</td><td>Harness</td><td>解析调用，并对照<a href="#permission-mode权限模式">权限模式</a>检查</td></tr>
+<tr><td>4</td><td>Harness</td><td>如果允许，执行它</td></tr>
+<tr><td>5</td><td>Harness</td><td>在下一次请求中把结果作为<a href="#tool-result工具结果">工具结果</a>发回</td></tr></tbody>
+</table>
+</div>
+<p>一个<a href="#turn轮次">轮次</a>的<a href="#agent智能体">智能体</a>工作，通常就是许多次这样的往返串在一起。</p>
+<p>因为调用和别的一切一样是由<a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>生成的，它可能像任何模型输出一样出错：不存在的路径、命令不支持的选项、看似合理但并不正确的参数。Harness 执行的是写下来的东西，不是想表达的东西——一个打错的路径不会优雅地报错，它会改错文件。</p>
+<p><em>Usage:</em></p>
+<p>“它说跑了测试，但文件时间戳没变。”</p>
+<p>“看对话记录——它到底发出了一次工具调用，还是只描述了运行测试？模型产出调用，但如果 Harness 没有执行，那就什么也没发生。”</p>
+</section>
+<section class="entry" id="tool-result工具结果">
+<h3>Tool result（工具结果）</h3>
+<p>工具结果是 <a href="#harness">Harness</a> 执行<a href="#tool-call工具调用">工具调用</a>后发回的内容——文件内容、命令输出、错误。<a href="#agent智能体">智能体</a>看<a href="#environment环境">环境</a>的唯一途径。它在<em>下一次</em><a href="#model-provider-request模型提供方请求">模型提供方请求</a>中回到<a href="#model模型">模型</a>，由模型决定拿它怎么办。工具调用和工具结果是同一次交换的两端，都在一个<a href="#turn轮次">轮次</a>里。</p>
+<p>工具结果的生命周期：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>步骤</th><th>谁</th><th>发生什么</th></tr></thead>
+<tbody><tr><td>1</td><td>Harness</td><td>执行工具调用——运行命令、读取文件</td></tr>
+<tr><td>2</td><td>Harness</td><td>捕获结果：输出、内容或错误</td></tr>
+<tr><td>3</td><td>Harness</td><td>把它作为一条消息追加到<a href="#context上下文">上下文</a></td></tr>
+<tr><td>4</td><td>Harness</td><td>在下一次模型提供方请求中把整个上下文发给提供方</td></tr>
+<tr><td>5</td><td>模型</td><td>读取结果并决定：再调一次工具，还是给出最终回答</td></tr></tbody>
+</table>
+</div>
+<p>结果会在<a href="#session会话">会话</a>剩余的时间里一直留在上下文中。工具结果通常占编码会话上下文的大头：每次读文件、每次跑测试、每次搜索都完整地进入上下文，在它早已失去用处之后仍继续占用 <a href="#token词元">Token</a>。几个大结果——一份冗长的测试日志、一个被整个读入的生成文件——能让会话比对话本身更快地逼近<a href="#context-window上下文窗口">上下文窗口</a>的边缘。</p>
+<p>因为结果就是模型看到的全部，模型没有办法去核对它背后的环境。如果输出被截断了、命令悄悄失败了，或者 Harness 返回的是错误而不是内容，模型就只能根据拿到的东西推理。当智能体对你系统的图景看起来不对时，工具结果就是该看的地方：对话记录里某处一定有一条结果，说了与你所知不同的话。</p>
+<p><em>Usage:</em></p>
+<p>“它在把一个文件当作空的来推理。”</p>
+<p>“工具结果回来的是权限拒绝，不是文件内容。模型只看到了错误字符串——它没有别的办法看到那个文件。”</p>
+</section>
+<section class="entry" id="mcp模型上下文协议">
+<h3>MCP（模型上下文协议）</h3>
+<p><strong>Model Context Protocol（模型上下文协议）。</strong> 一种把外部工具服务器接入 <a href="#harness">Harness</a> 的协议——<a href="#agent智能体">智能体</a>借此获得 Harness 自带之外的<a href="#tool工具">工具</a>。智能体从不“调用 MCP”；它调用一个工具，而 Harness 恰好是从某个 MCP 服务器拿到这个工具的。协议也暴露资源（只读数据）和提示词（可复用模板），但提供工具是主要用途。</p>
+<p>这个协议解决的是一个集成问题。没有标准时，每个 Harness 都得有自己的 Linear 集成、自己的 Slack 集成、自己的数据库集成——为每一家分别编写和维护。有了 MCP，集成写一次、做成服务器，任何兼容 MCP 的 Harness 都能用。Harness 连上服务器，服务器公布它提供哪些工具，这些工具就和内置工具一起对智能体可用。</p>
+<p>代价付在<a href="#context上下文">上下文</a>上。服务器公布的每个工具都以定义的形式到来——名称、描述、参数 schema——而<a href="#model模型">模型</a>只能调用它知道的工具。朴素做法是把每个定义预先载入<a href="#context-window上下文窗口">上下文窗口</a>：装几个提供大量工具的服务器，一个<a href="#session会话">会话</a>在你还没输入任何东西之前，就带着几千个 <a href="#token词元">Token</a> 的工具 schema 开始了，把<a href="#attention-budget注意力预算">注意力预算</a>花在任务永远不会用的工具上。</p>
+<p>许多 Harness 现在用工具搜索来缓解这个问题：上下文里不放完整定义，而是放一个指向可用工具的<a href="#context-pointer上下文指针">上下文指针</a>——智能体按名称或用途搜索工具，只在需要时载入定义。如果你的 Harness 不这么做，前期成本仍然存在，那就值得只启用项目真正需要的服务器。</p>
+<p><em>Usage:</em></p>
+<p>“智能体需要从 Linear 读工单。”</p>
+<p>“把 Harness 配置成使用 Linear MCP 服务器——它把 Linear API 暴露成智能体可调用的工具。省得你自己写工具包装。”</p>
+</section>
+<section class="entry" id="permission-request权限请求">
+<h3>Permission request（权限请求）</h3>
+<p>权限请求是 <a href="#harness">Harness</a> 在执行一次尚未预先批准的<a href="#tool-call工具调用">工具调用</a>前向用户展示的内容。<a href="#model模型">模型</a>产出一个工具调用；Harness 不立刻运行，而是暂停并询问。批准，它就运行；拒绝，Harness 把拒绝作为<a href="#tool-result工具结果">工具结果</a>报回给模型。这是 Harness 在危险或敏感操作上把人放进<a href="#human-in-the-loop人在回路">回路</a>的机制。</p>
+<p>权限请求的生命周期：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>步骤</th><th>谁</th><th>发生什么</th></tr></thead>
+<tbody><tr><td>1</td><td>模型</td><td>产出一个工具调用</td></tr>
+<tr><td>2</td><td>Harness</td><td>对照<a href="#permission-mode权限模式">权限模式</a>和任何已保存的批准进行检查</td></tr>
+<tr><td>3</td><td>Harness</td><td>已预先批准：立即执行。否则：暂停并展示请求</td></tr>
+<tr><td>4</td><td>用户</td><td>批准一次、在本<a href="#session会话">会话</a>余下时间里一直批准，或者拒绝</td></tr>
+<tr><td>5</td><td>Harness</td><td>执行调用，或者把拒绝作为工具结果发回</td></tr></tbody>
+</table>
+</div>
+<p>拒绝一个请求就是在引导智能体。模型会像读其他工具结果一样读这次拒绝，并作出反应——换个办法，或者问你想怎么做。大多数 Harness 允许你在拒绝时附一条消息，这把请求变成了一个引导点：“不是那样，用迁移脚本”会在模型正决定下一步做什么的时候到达。</p>
+<p>代价是每个请求都是对你的一次同步等待。<a href="#agent智能体">智能体</a>会一直阻塞到你回答，你盯着的时候没问题，没盯着的时候就是问题——一个不断触发请求的智能体，没法在你 <a href="#afk离开键盘">AFK</a> 时放它自己工作。权限模式是那个旋钮：哪些调用自由运行、哪些先问，理想情况下再配一个<a href="#sandbox沙箱">沙箱</a>，让扩大免询问调用的范围变得安全。</p>
+<p><em>Usage:</em></p>
+<p>“它卡在一个权限请求上十分钟了——我当时在开会。”</p>
+<p>“这就是人在回路的代价。预先批准安全的<a href="#tool工具">工具</a>，让请求只在真正危险的操作上触发。”</p>
+</section>
+<section class="entry" id="permission-mode权限模式">
+<h3>Permission mode（权限模式）</h3>
+<p>权限模式是<a href="#agent-mode智能体模式">智能体模式</a>里负责权限门控的那一部分——哪些<a href="#tool-call工具调用">工具调用</a>会触发<a href="#permission-request权限请求">权限请求</a>，哪些自动运行。这是模式系统最初的目的，后来 <a href="#harness">Harness</a> 才开始在它上面捆绑行为指令。</p>
+<p>Harness 自带一套逐级递进的模式：</p>
+<div class="table-wrap">
+<table style="min-width:28rem">
+<thead><tr><th>模式</th><th>读取</th><th>写入与 shell</th><th>典型用途</th></tr></thead>
+<tbody><tr><td>只读 / plan</td><td>自动</td><td>阻止</td><td>调研、规划、审查</td></tr>
+<tr><td>默认</td><td>自动</td><td>询问</td><td>日常有人监督的工作</td></tr>
+<tr><td>自动编辑</td><td>自动</td><td>编辑自动，shell 询问</td><td>可信仓库、机械改动</td></tr>
+<tr><td>“Yolo” / 全自动</td><td>自动</td><td>自动</td><td><a href="#sandbox沙箱">沙箱</a>、<a href="#afk离开键盘">AFK</a> 运行</td></tr></tbody>
+</table>
+</div>
+<p>选哪一档，是安全与打断之间的取舍，两种失败模式都能感觉到。太紧，你就成了瓶颈：<a href="#agent智能体">智能体</a>每隔几秒为无害的读取停下来，你不假思索地点批准，批准本身就不再意味着什么——橡皮图章式的批准两头都输——全是打断，没有一点保护。太松，智能体就会改文件、跑命令，而那些你本来想先看一眼。</p>
+<p>松的那一头放在沙箱里最有道理，那里一次糟糕<a href="#tool工具">工具</a>调用的影响范围受到限制。在沙箱之外，多数人会选择自动批准读取，对任何不可逆的操作保留<a href="#human-in-the-loop人在回路">人在回路</a>。</p>
+<p><em>Usage:</em></p>
+<p>“它每次 grep 都要暂停——完全毁掉了 AFK 运行。”</p>
+<p>“放宽只读工具的权限模式，写入和 shell 继续询问。调研<a href="#session会话">会话</a>里的大多数权限请求都是噪音。”</p>
+</section>
+<section class="entry" id="agent-mode智能体模式">
+<h3>Agent mode（智能体模式）</h3>
+<p>智能体模式是一个在运行时塑造<a href="#agent智能体">智能体</a>行为方式的预设——它把<a href="#permission-mode权限模式">权限模式</a>与注入到<a href="#system-prompt系统提示词">系统提示词</a>中的行为指令打包在一起。例子：一个在危险调用上询问的默认模式，一个阻止编辑、把智能体引向调研的 <strong>plan mode</strong>，一个自动批准编辑的 <strong>accept-edits</strong> 模式，一个自动批准一切的 <strong>bypass permissions</strong> 模式（俗称 <strong>YOLO mode</strong>）。可以在<a href="#session会话">会话中途</a>切换。</p>
+<p>模式之所以不同于单纯的权限设置，就在于这种打包。权限模式只是一道门：它决定哪些<a href="#tool-call工具调用">工具调用</a>能通过。只有一道门的话，得到的智能体想编辑却做不到——它提出写入，被挡住，再换一种方式。注入的指令消除了“想”：plan mode 不只是阻止编辑，它告诉智能体自己正处于规划阶段，于是它阅读、询问、提出方案，而不是硬顶着门。门和引导指向同一个方向。</p>
+<p>实际使用中，信任程度会随任务推进而变化，你也就跟着切换模式。同一个任务可以经过好几个模式：思路还在成形时用 plan mode，最初几处精细编辑用会询问的默认模式，智能体表明它理解了改动之后用 accept-edits，在<a href="#sandbox沙箱">沙箱</a>里跑<a href="#afk离开键盘">AFK</a>时用 bypass 模式。切换模式不花任何代价：对话完全接着原来的地方继续，只是有了新的权限和新的指令。如果你发现自己不看内容就批准每一条提示，说明模式设得比你实际的信任更紧；如果你一直在拒绝编辑，说明设得太松。</p>
+<p><em>Vendor terms:</em> Claude Code 把这些叫“permission modes”，Codex 叫“approval modes”——两者都早于行为指令的捆绑。</p>
+<p><em>Usage:</em></p>
+<p>“我只想要个计划，它却一直在改文件。”</p>
+<p>“切到 plan mode——它会阻止写入，留在调研状态。”</p>
+<p>“那之后的 AFK 运行呢？”</p>
+<p>“用 bypass 模式，但只能在沙箱里。”</p>
+</section>
+<section class="entry" id="sandbox沙箱">
+<h3>Sandbox（沙箱）</h3>
+<p>沙箱是<a href="#agent智能体">智能体</a>在其中运行的隔离<a href="#environment环境">环境</a>——一个容器、虚拟机、临时<a href="#filesystem文件系统">文件系统</a>，或权限受限的 shell。它限制智能体操作的影响范围：即使智能体运行了破坏性命令，或者拉取了恶意内容，损害也被限制在范围内。它是让 <a href="#afk离开键盘">AFK</a> 可行的安全底座。</p>
+<p>沙箱和<a href="#permission-mode权限模式">权限模式</a>从相反的两端解决同一个问题。权限在操作运行前询问；沙箱限制操作运行后能触及的范围。权限需要你<a href="#human-in-the-loop人在回路">在回路里</a>——每次提示都是一次打断——一个不断询问的会话几乎谈不上自主。沙箱花的是基础设施，不是注意力：隔离越强，需要问的问题越少。</p>
+<p>隔离是分等级的：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>等级</th><th>是什么</th><th>能围住什么</th></tr></thead>
+<tbody><tr><td>受限 shell</td><td>围绕每条命令的操作系统级限制</td><td>项目之外的写入、网络访问</td></tr>
+<tr><td>容器</td><td>全新文件系统，不挂载凭据，用完丢弃</td><td>智能体对自己机器做的一切</td></tr>
+<tr><td>虚拟机 / 云</td><td>完全独立的一台机器，通常由 Harness 提供</td><td>一切，包括内核级逃逸</td></tr></tbody>
+</table>
+</div>
+<p>没有沙箱能围住的是：合法离开它的操作。一个带着你 git 凭据的智能体可以推送；一个能访问网络的智能体可以调用生产 API。先决定什么能穿过边界，再决定边界要多厚。</p>
+<p><em>Usage:</em></p>
+<p>“我想让它在 <a href="#agent-mode智能体模式">bypass-permissions</a> 模式下整夜运行，但我还没准备好。”</p>
+<p>“放进沙箱——全新容器，不挂载凭据，不出网。最坏情况它毁掉自己的文件系统，你把容器丢掉。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 4 — Failure Modes（失败模式）</h2>
+<section class="entry" id="sycophancy谄媚">
+<h3>Sycophancy（谄媚）</h3>
+<p>谄媚是<a href="#model模型">模型</a>自信地顺着你说话的输出。成因是<a href="#training训练">训练</a>：模型被塑造成偏爱人类喜欢的回答，而人倾向于喜欢附和，胜过喜欢被告知自己错了。于是模型学到了附和会得到奖励——即使这个附和是错的。</p>
+<p><em>表现形态：</em></p>
+<ul>
+<li><em>被追问就退让</em> —— 你说“你确定吗？”，它就把正确答案改掉。</li>
+<li><em>夸奖糟糕的输入</em> —— 还没分析，就同意你那个有问题的计划很棒。</li>
+<li><em>有偏向的措辞框架</em> —— 你暗示是自己写的，评审就偏正面；你暗示是别人写的，就偏负面。同一份东西，不同的结论。</li>
+<li><em>复读</em> —— 把你的错误复述回来，当作确认。</li>
+</ul>
+<p><em>诊断测试：</em> 如果没有你的引导，模型还会这么说吗？如果唯一变化的是你的语气或措辞，那就是谄媚，不是分析真的变了。</p>
+<p><em>修法：</em> 藏起你的偏好。中性措辞——“审查这段代码”，而不是“这段代码好吗？”。</p>
+<p><em>Avoid:</em> 把任何恰好让你高兴的错误答案都叫“谄媚”。没有诊断测试，这个词就不比“错了”更有用。</p>
+<p><em>Usage:</em></p>
+<p>“它说我的重构计划看起来很棒，然后我问了一句‘你确定吗？’，它就把整个方案收回去了。”</p>
+<p>“典型的谄媚——它先同意，是因为你听起来很自信；后来退让，是因为你听起来在怀疑。计划的品质没变，变的是你的语气。先做一次 <a href="#clearing清空上下文">Clearing</a>，再不带任何倾向地重新问一遍。”</p>
+</section>
+<section class="entry" id="hallucination幻觉">
+<h3>Hallucination（幻觉）</h3>
+<p>幻觉是<a href="#model模型">模型</a>自信地给出错误输出。两种类型，成因和修法都不同：</p>
+<div class="table-wrap">
+<table style="min-width:28rem">
+<thead><tr><th>类型</th><th>哪里出错</th><th>成因</th><th>修法</th></tr></thead>
+<tbody><tr><td><em>事实性</em></td><td>关于世界的事实被编造或弄错——不存在的函数、错误的 API 签名、伪造的引用</td><td><a href="#parametric-knowledge参数化知识">参数化知识</a>有缺口，常常在<a href="#knowledge-cutoff知识截止时间">知识截止时间</a>之后</td><td>载入正确的<a href="#contextual-knowledge上下文知识">上下文知识</a></td></tr>
+<tr><td><em>忠实性</em></td><td>输出偏离了已载入的上下文知识、用户的指令，或模型自己先前的推理</td><td><a href="#attention-degradation注意力退化">注意力退化</a>；在<a href="#smart-zone智能区">迟钝区</a>会加重</td><td><a href="#clearing清空上下文">清空</a>或<a href="#compaction压缩">压缩</a></td></tr></tbody>
+</table>
+</div>
+<p><a href="#next-token-prediction下一个-token-预测">下一个 Token 预测</a>不管底下的事实是否真实，都会产出流畅的输出——模型内部没有“我不知道”的信号，所以一个编造的方法会以和一个正确方法同样笃定的语气到来。幻觉出来的代码从构造上就是合理的：它就是那个 API 如果存在<em>本应</em>长成的样子，而这正是它能在略读阶段蒙混过关、只在运行时才失败的原因。</p>
+<p>你必须知道自己在看哪一种，因为修好一种会让另一种更糟。事实性意味着知识缺失：修法是补充上下文——文档、类型定义、那个文件。忠实性意味着知识在场，但在注意力竞争中落败：修法是删减上下文。把忠实性误诊成事实性，你就会再粘进更多文档，这会撑大上下文，让漂移更严重。当智能体弄错时，先检查正确信息是否已经在上下文里，再决定你面对的是哪种问题。</p>
+<p><em>Avoid:</em> 把“幻觉”当成“错了”的同义词——不点明是哪种类型，这个词就没有诊断价值。</p>
+<p><em>Usage:</em></p>
+<p>“它在 schema 上幻觉出了一个 <code>parseAsync</code> 方法。”</p>
+<p>“事实性还是忠实性？”</p>
+<p>“这个方法在我粘进去的文档里就有——它只是到第四十个<a href="#turn轮次">轮次</a>之后就不读了。”</p>
+<p>“那就是忠实性。压缩后重新载入，别再补文档了。”</p>
+</section>
+<section class="entry" id="parametric-knowledge参数化知识">
+<h3>Parametric knowledge（参数化知识）</h3>
+<p>参数化知识是<a href="#model模型">模型</a>从<a href="#training训练">训练</a>中“知道”的东西，存在它的<a href="#parameters参数">参数</a>里。它在训练时冻结——模型看不到自己的参数，也更新不了。细节在挤压中丢失：几十亿条事实塞进固定数量的参数，稀有的那些会变模糊。它是模型在常见话题上流畅的来源，也是在不常见话题上编造的来源。它与<a href="#contextual-knowledge上下文知识">上下文知识</a>相对。</p>
+<p>参数化知识不是以事实的形式存储的。训练从不给模型一个可以查东西的数据库；它调整参数，直到模型能很好地预测文本，而一个能很好地预测某个话题相关文本的模型，行为上就像它懂这个话题。知识的可靠程度，跟某样东西在训练数据里出现的频率走：有上百万个例子的话题会被准确复现，只有几个例子的话题，模型会根据相似话题的样子去猜。对模型来说，复现和猜是同一个过程，所以它分不清自己在做哪一个。编造的答案会以和正确答案同样的流畅度到来。<a href="#hallucination幻觉">幻觉</a>就是模型猜错了。</p>
+<p>参数化知识也会变旧。参数在<a href="#knowledge-cutoff知识截止时间">知识截止时间</a>停止变化，所以在那之后发布或改名的库，在参数里不存在；改过的 API，也被记成旧的样子。</p>
+<p>对两种缺口——太稀有和太新——补救办法是一样的：知识没法被加进参数，只能改为以上下文知识的形式提供。</p>
+<p><em>Usage:</em></p>
+<p>“它把 React 写得完美无缺，却会给我们的内部 SDK 编造方法。”</p>
+<p>“React 在参数化知识里非常密集——有上百万个训练例子。你的 SDK 没有，所以模型就补上看起来像模像样的东西。把 SDK 文档载入<a href="#context上下文">上下文</a>。”</p>
+</section>
+<section class="entry" id="knowledge-cutoff知识截止时间">
+<h3>Knowledge cutoff（知识截止时间）</h3>
+<p>知识截止时间是<a href="#model模型">模型</a>不再拥有<a href="#parametric-knowledge参数化知识">参数化知识</a>的那个日期。截止之后发布的库、API 和事件都是编造陷阱，除非把它们的文档作为<a href="#contextual-knowledge上下文知识">上下文知识</a>载入。每个模型版本都带着自己的截止时间。</p>
+<p>截止时间的存在，源于模型是怎么造出来的：<a href="#training训练">训练</a>把一份文本快照固化进模型的<a href="#parameters参数">参数</a>，之后参数就冻结了。模型不知道自己的知识有边界——被问到截止之后的事情，它不会拒绝，而是从最近的一个它知道的东西外推。这正是这个陷阱不易察觉的原因：针对旧版本库写出的代码看起来合理，常常还能编译，只在那些改动过的部分失败。</p>
+<p>修法永远一样：把当前的信息放进<a href="#context上下文">上下文</a>。载入变更日志，指向已安装版本的类型定义，或者让智能体从网上读文档。上下文里有的东西，总强过参数里什么都没有。</p>
+<p><em>Usage:</em></p>
+<p>“它一直写 v3 SDK 的语法——我们用的是 v5。”</p>
+<p>“v5 是在知识截止时间之后发布的。把 v5 的变更日志作为上下文知识载入，不然它会一直从更旧的参数版本里编造。”</p>
+</section>
+<section class="entry" id="contextual-knowledge上下文知识">
+<h3>Contextual knowledge（上下文知识）</h3>
+<p>上下文知识是<a href="#agent智能体">智能体</a>此刻能从<a href="#context上下文">上下文</a>里直接读到的事实——用户的任务、智能体读进来的文件、<a href="#tool-result工具结果">工具结果</a>、<a href="#session会话">会话</a>开始时载入的 <a href="#agentsmd">AGENTS.md</a> 内容。它与<a href="#parametric-knowledge参数化知识">参数化知识</a>相对：参数化知识是从参数里<em>回忆</em>出来的；上下文知识是从<a href="#context-window上下文窗口">窗口</a>里<em>读</em>出来的。当智能体依靠上下文知识工作时，<a href="#hallucination幻觉">幻觉</a>少得多——答案就在眼前，而不是从模糊的记忆里捞出来的。</p>
+<p>在两种知识里，只有上下文知识是你可控的。参数是冻结的，所以要让<a href="#model模型">模型</a>拥有它缺少的知识——一个内部 SDK、一个在<a href="#knowledge-cutoff知识截止时间">知识截止时间</a>之后发布的库、昨天做出的一个决定——唯一的方法就是把它放进上下文。大量实际的 <a href="#ai人工智能">AI</a> 编程工作，归结起来就是这件事：在模型需要的那一刻，把正确的事实放到它面前。</p>
+<p>当上下文知识和参数化知识冲突时，通常是上下文知识赢。粘进当前的 API 文档，模型会照文档来，而不是照它关于旧 API 的陈旧记忆——不过旧版本仍可能渗出来，尤其是在长会话的后期。如果智能体明明载入了文档，却反复回到过时的模式，那就是参数化知识越过了上下文知识；把纠正再说一遍，或者把它挪到离工作更近的地方，会有帮助。</p>
+<p>和参数化知识不同，使用上下文知识是有代价的。载入窗口的一切都消耗 <a href="#token词元">Token</a>，并争夺模型的<a href="#attention-budget注意力预算">注意力预算</a>，所以载入更多并不自动更好——目标是窗口里有相关的事实，而不是全部事实。</p>
+<p><em>只在与参数化知识对照时</em>才用这个术语；其他时候直接说<strong>上下文</strong>。</p>
+<p><em>Avoid:</em> “工作记忆”——上下文知识是<em>此刻</em>在窗口里的东西；<a href="#memory-system记忆系统">记忆系统</a>是把跨会话的内容送进窗口的机制。尺度不同，不要混为一谈。</p>
+<p><em>Usage:</em></p>
+<p>“为什么我粘了文档它就答对 API，不粘就编造？”</p>
+<p>“文档在里面时，它用的是上下文知识——照着页面读。没有文档时，用的是参数化知识，稀有的端点就模糊了。”</p>
+</section>
+<section class="entry" id="attention-relationship注意力关系">
+<h3>Attention relationship（注意力关系）</h3>
+<p>在预测每个 <a href="#token词元">Token</a> 时，<a href="#model模型">模型</a>会把<a href="#context上下文">上下文</a>里其他所有 Token 都算进去——有些权重大，有些几乎为零。两个 Token 之间的配对就是一个<strong>注意力关系</strong>，而有意义的配对（“她”和“Sarah”，或者一次 <code>getUser()</code> 调用和它的 <code>function getUser</code> 定义）彼此之间的影响，大于无关配对彼此之间的影响。N 个 Token 的上下文，大约有 N² 个关系。</p>
+<p>模型表面上的理解，就体现在这些配对中。当它消解一个代词时，是因为“她”和“Sarah”之间的注意力关系足够强。当它用正确的参数调用一个函数时，起作用的是调用点和它先前读到的定义之间的关系。这些都不是查出来的——而是在每次<a href="#model-provider-request模型提供方请求">模型提供方请求</a>时，为每一对关系重新算出来的。</p>
+<p>N² 这个数字值得停下来想一想，因为它增长得比直觉快：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>上下文大小</th><th>配对数（约 N²）</th></tr></thead>
+<tbody><tr><td>1,000 Token</td><td>约 100 万</td></tr>
+<tr><td>10,000 Token</td><td>约 1 亿</td></tr>
+<tr><td>100,000 Token</td><td>约 100 亿</td></tr></tbody>
+</table>
+</div>
+<p>每个配对还会被计算不止一次。模型有多个注意力头——前沿模型的确切数量没有公开，但五十到一百是个合理的猜测——每个头都会为每个关系算出自己的一份版本。所以上表里的每个配对，都要在每个头上复制一遍。这会产生大量配对。</p>
+<p>对任何一个任务来说，这些关系里只有一小部分重要。你的指令和它所管的代码之间的配对，只是少数几个真正起作用的配对之一；池中其余的一切几乎都是噪音。而且两者的增长速度不同：重要的关系大致恒定，而总池子随上下文大小平方增长。在 1,000 个 Token 时，你在意的配对是一百万分之一；在 100,000 个 Token 时，是一百亿分之一。这就是<a href="#attention-budget注意力预算">注意力预算</a>底下的算术，而<a href="#attention-degradation注意力退化">注意力退化</a>，就是重要的关系分到的份额太薄时的感受。</p>
+<p><em>Usage:</em></p>
+<p>“它老是把 diff 里的两个 <code>user</code> 符号弄混——听起来我们已经在<a href="#smart-zone智能区">迟钝区</a>了。”</p>
+<p>“对，每个调用点和它声明之间的注意力关系，正在和另一个打架——同样的 Token 形状，不同的绑定。改掉其中一个的名字，配对就会变清楚。”</p>
+</section>
+<section class="entry" id="attention-budget注意力预算">
+<h3>Attention budget（注意力预算）</h3>
+<p>每个 <a href="#token词元">Token</a> 都有一份有限的影响力，要分配到<a href="#context上下文">上下文</a>的其余部分。把大量影响力集中在一个<a href="#attention-relationship注意力关系">关系</a>上，留给其他关系的就少了。预算是按 Token 计的，不随上下文增长——这就是长<a href="#session会话">会话</a>会被稀释的原因。</p>
+<p>把它想成信号和噪音。你的指令是一个音量固定的信号；<a href="#context-window上下文窗口">上下文窗口</a>里其他每个 Token 都是竞争的声音。指令本身从不变弱——它还在那里，一个字都不少——但随着上下文增长，它周围的房间越来越吵，信噪比下降。一条在 10k Token 上下文时最响的指令，到 150k 时就成了背景嗡鸣。这就是<a href="#attention-degradation注意力退化">注意力退化</a>背后的机制：模型没有忘记；信号在噪音里丢了。</p>
+<p>症状表现为不听话——智能体早先答应过一条约束，然后逐渐偏离，重新粘贴这条约束也只能短暂管用。原因不在指令，而在于窗口里其他一切都在和它竞争。</p>
+<p>你能控制的是往上下文里放什么。不服务任务的内容不是中性的——它是盖在一切有用内容之上的噪音。保持窗口小，在累积的上下文不再划算时<a href="#clearing清空上下文">清空</a>，把重要的约束重述一遍，而不是指望它们早先被提过就能一直成立。</p>
+<p><em>Usage:</em></p>
+<p>“为什么它一直无视我粘在最上面的 schema？”</p>
+<p>“我们已经深入<a href="#smart-zone智能区">迟钝区</a>了——每个 Token 的注意力预算都是固定的，但上下文一直在长。schema 的信号现在在和几千个更新的 Token 竞争。”</p>
+</section>
+<section class="entry" id="attention-degradation注意力退化">
+<h3>Attention degradation（注意力退化）</h3>
+<p>随着<a href="#session会话">会话</a>增长，每个 <a href="#token词元">Token</a> 的<a href="#attention-budget注意力预算">注意力预算</a>被摊到更多竞争者上。任何一个<a href="#attention-relationship注意力关系">有意义关系</a>上的信号都在缩小；来自无关<a href="#context上下文">上下文</a>的噪音挤进来。同一个<a href="#model模型">模型</a>，同一套<a href="#parameters参数">参数</a>——只是同一只盘子上多了很多张嘴。这是智能区 / 迟钝<a href="#smart-zone智能区">区效应</a>的成因。</p>
+<p>它表现为模型在会话中途变差：遵守了一个小时的约束开始失守，它重新问已经被告知的事，写出忽略它先前读过的文件的代码。模型本身什么都没变——唯一的变量是它现在要关注的上下文有多大。</p>
+<p>它是渐进的，这正是它难以从会话内部察觉的原因。没有报错，也没有阈值；每个<a href="#turn轮次">轮次</a>只比上一个差一点，等到失误变得明显时，你已经在迟钝区里待了一阵子。</p>
+<p>你要靠删减上下文来恢复，而不是增加。重新粘贴被无视的指令，只是给同一个拥挤的窗口又添了一个竞争者，只能短暂管用。有效的做法是：<a href="#clearing清空上下文">清空</a>并只重新载入任务需要的内容，或者<a href="#compaction压缩">压缩</a>，或者<a href="#handoff交接">交接</a>到一个新会话。把指令遵循度下降当作关于上下文长度的信号，而不是关于模型的信号。</p>
+<p><em>Usage:</em></p>
+<p>“它已经深陷迟钝区了——在编造类型文件里没有的泛型。”</p>
+<p>“注意力退化。类型定义还在上下文里，但关于它们的信号被我们后来添加的一切埋住了。清空再重新载入。”</p>
+</section>
+<section class="entry" id="smart-zone智能区">
+<h3>Smart zone（智能区）</h3>
+<p><a href="#session会话">会话</a>早期，<a href="#agent智能体">智能体</a>处在“智能区”——敏锐、专注、回忆准确。随着会话增长，它漂进“迟钝区”：更马虎、更健忘、更多错误——以及更多忠实性<a href="#hallucination幻觉">幻觉</a>。同一个<a href="#model模型">模型</a>，同一个 <a href="#harness">Harness</a>——只是更多<a href="#context上下文">上下文</a>。这是<a href="#attention-degradation注意力退化">注意力退化</a>带来的实际体感。在前沿模型上，迟钝区通常从 125K–150K 个 <a href="#token词元">Token</a> 左右开始——不过这一点有争议。会话膨胀时<a href="#clearing清空上下文">清空</a>或<a href="#compaction压缩">压缩</a>；不要硬撑。</p>
+<p>下降是渐进的，所以容易错过。没有报错信息，也没有可见的边界；智能体只是开始表现得稍微差一点，然后明显差一点。常见的迹象：它忘了你二十个轮次前给的指令，重复一个已经纠正过的错误，或者自信地断言某件与上下文矛盾的事。由于这种下滑是平缓的，常见的反应是硬撑并重新解释——这会增加更多上下文，让问题更糟。</p>
+<p>这些区与<a href="#context-window上下文窗口">上下文窗口</a>的上限并不对应。一个会话可能在窗口还有大半空闲时就已经深陷迟钝区：上限是 Harness 拒绝继续的地方，但质量早在那里之前就下降了。围绕智能区来做计划，而不是围绕窗口——一个任务的实用预算是智能体能良好工作的 Token 数，而不是它技术上能装的 Token 数。</p>
+<p>智能区是一份预算，不相关的工作会花掉它。会话里做的每个任务都会消耗 Token，所以在同一个会话里开始第二个任务，意味着它离迟钝区更近。一个会话只做一个任务，能让每个任务都得到会话最敏锐的那一段。当单个任务大于一个智能区时，把它拆开：在自然的边界处<a href="#handoff交接">交接</a>或压缩，让新会话做下一块。</p>
+<p><em>Usage:</em></p>
+<p>“前三个组件它都做得漂亮，第四个却彻底搞砸了。”</p>
+<p>“你已经出了智能区——还是同一个模型，只是现在深陷迟钝区。压缩后重新载入计划，下一个组件就能做对。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 5 — Handoffs（交接）</h2>
+<section class="entry" id="clearing清空上下文">
+<h3>Clearing（清空上下文）</h3>
+<p>Clearing 是结束当前<a href="#session会话">会话</a>并开始一个新会话。下一条消息会从一个空会话、一个空<a href="#context-window上下文窗口">上下文窗口</a>开始。通常由用户发起。</p>
+<p>Clearing 是清空一个被污染的上下文的办法。一个会话会累积一切：失败的尝试、走错的路、过期的<a href="#tool-result工具结果">工具结果</a>、放弃的计划。<a href="#model模型">模型</a>每个<a href="#turn轮次">轮次</a>都会重读这一切，糟糕的历史会拖累新的工作。深陷长会话时，<a href="#agent智能体">智能体</a>会变得含糊、不那么听话——你清楚给出的指令被无视，质量下滑，催它做好一点也没用，因为它趟过的那堆噪音还在<a href="#context上下文">上下文</a>里。Clearing 把噪音移除。</p>
+<p>Clearing 不会抹掉对话内容。大多数 <a href="#harness">Harness</a> 会把会话历史留在你的电脑上，所以对话记录还在，可以读或恢复。消失的是智能体的工作状态：模型是<a href="#stateless无状态">无状态</a>的，所以新会话对旧会话知道的一切一无所知。如果这个会话里有下一个会话需要的决定或进展，先让智能体写一份<a href="#handoff-artifact交接产物">交接产物</a>，再开一个新会话，一开始就指向这份交接产物。</p>
+<p>对比<a href="#compaction压缩">压缩</a>：它把会话总结后放进新的上下文，而不是从空开始。Clearing 是更钝的工具：什么都不带过去，包括垃圾。</p>
+<p><em>Usage:</em></p>
+<p>“它卡在失败的测试上一直循环。”</p>
+<p>“直接清空——用计划文档和测试文件开一个新会话。没必要和现有的上下文较劲。”</p>
+</section>
+<section class="entry" id="handoff交接">
+<h3>Handoff（交接）</h3>
+<p>交接是把<a href="#agent智能体">智能体</a>的<a href="#context上下文">上下文</a>从一个<a href="#session会话">会话</a>转移到另一个会话。承载机制各异——一份写下来的<a href="#handoff-artifact交接产物">交接产物</a>、一份在内存里的摘要（<a href="#compaction压缩">压缩</a>），以及其他方式。它有别于 <a href="#clearing清空上下文">Clearing</a>（完全不转移）。原因各异：切换角色（规划者 → 实现者）、启动一次 <a href="#afk离开键盘">AFK</a> 运行、分叉成并行的会话，或者腾出<a href="#context-window上下文窗口">上下文窗口</a>的空间。</p>
+<p>接收的会话从零上下文开始——<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的，旧会话里的任何东西对新会话都不可见。下一个会话需要什么，就必须被显式带过去；其他一切都消失了。“没有回头路”是塑造承载机制的约束：新会话没法去问旧会话它当时是什么意思，所以带过去的材料必须自己站得住。</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>机制</th><th>形式</th><th>特性</th></tr></thead>
+<tbody><tr><td>交接产物</td><td><a href="#environment环境">环境</a>里的文件</td><td>在任何东西依赖它之前，你可以读并改正它；可在许多会话间复用</td></tr>
+<tr><td>压缩</td><td>上下文窗口里的摘要</td><td>自动且便宜；更难检查；只喂给一个后继会话</td></tr></tbody>
+</table>
+</div>
+<p>糟糕交接看得见的失败，是重新翻案：新会话重新打开旧会话已经定下的决定，因为带过去的东西记录了决定了什么，却没记录为什么。判断一次交接好坏，看一个零上下文的会话能拿它做成什么。</p>
+<p><em>Usage:</em></p>
+<p>“规划会话越来越重了——我是不是接着往下做就行？”</p>
+<p>“做一次交接。把决定写进一份文档，清空，在新会话里读着它开始实现。”</p>
+</section>
+<section class="entry" id="primary-source一手来源">
+<h3>Primary source（一手来源）</h3>
+<p>一手来源是处于原始形态的事实来源——代码、对话记录、原始日志、真实的 API 响应。它不是对事物的描述；它就是事物本身。它与<a href="#secondary-source二手来源">二手来源</a>相对。</p>
+<p>如果你想知道代码库在做什么，代码就是一手来源。文档、架构图和 README 都是对它的描述——写的时候准确，之后各自按自己的节奏老化。当一个<a href="#agent智能体">智能体</a>自信地断言关于你项目的错误信息时，该问的是它依据的是哪个来源：读了文档的智能体继承了文档的陈旧内容；读了代码的智能体读的是当前的真相。</p>
+<p>成本正是一手来源没能成为默认选项的原因。把它载入<a href="#context-window上下文窗口">上下文窗口</a>很贵——整个文件、整份对话记录、每个 <a href="#token词元">Token</a> 都按<a href="#input-tokens输入-token">输入</a>计费，并争夺<a href="#attention-budget注意力预算">注意力预算</a>。付出这份成本，换来的是完整：没有任何东西被别人关于什么重要的判断预先筛过。上个月写的一份摘要，不可能包含今天才发现重要的那个细节；一手来源仍然包含。</p>
+<p>在精确性重要的时候用一手来源——确切的签名、实际的错误、抛异常的那一行。管理<a href="#context上下文">上下文</a>的很大一部分工作，就是决定什么时候为一手来源付钱，什么时候二手来源就够了。</p>
+<p><em>Usage:</em></p>
+<p>“智能体说重试逻辑是指数退避，但我看着它在猛打端点。”</p>
+<p>“它是从设计文档里读到的。让它指向实际的重试模块——行为重要时，就以一手来源为准。”</p>
+</section>
+<section class="entry" id="secondary-source二手来源">
+<h3>Secondary source（二手来源）</h3>
+<p>二手来源是对<a href="#primary-source一手来源">一手来源</a>的转述，隔了一层——描述代码的文档、描述对话记录的摘要、描述搜索结果的报告。它比它所描述的那个来源载入<a href="#context-window上下文窗口">上下文窗口</a>的成本更低，而且天生有损：写它的人决定了什么重要，而只拿到摘要的读者看不见被丢掉的东西。</p>
+<p>大量的<a href="#context上下文">上下文</a>工程，就是在制造二手来源。<a href="#compaction压缩">压缩</a>把<a href="#session会话">会话</a>历史变成一份摘要，用来给下一个会话播种。一个<a href="#subagent子智能体">子智能体</a>把上下文烧在一次嘈杂的搜索上，返回一份简短报告。一份<a href="#handoff-artifact交接产物">交接产物</a>把一个会话的决定浓缩成下一个会话要读的文档。<a href="#memory-system记忆系统">记忆系统</a>把一个会话学到的东西提炼成笔记。每一个都做同样的交换：用保真度换空间。</p>
+<p>二手来源会以两种方式失败。它们有损——丢掉了 schema 决定的压缩摘要，没提边界情况的报告。它们还会漂移——一手来源变了，转述不跟着变，于是文档用这个季度的自信描述上个季度的架构。当一个<a href="#agent智能体">智能体</a>依据以这两种方式之一失败过的二手来源行动时，它会自信地依据错误信息工作；修法是把它送回一手来源。</p>
+<p>两种失败都不意味着二手来源是错的。上下文窗口有限，一手来源又贵；没有摘要、报告和交接文档，大的东西根本装不下。技能在于知道哪些细节经得起丢失——以及在经不起时，回到一手来源核对。一份做得好的二手来源会带上回到原文的<a href="#context-pointer上下文指针">上下文指针</a>——摘要点名它来自哪份对话记录，文档点名它描述的是哪个文件——这样当转述不够时，读者可以顺着指针回去，而不是将就着用丢失后的版本。</p>
+<p><em>Usage:</em></p>
+<p>“交接文档说认证做完了，但新会话总发现 Token 刷新是坏的。”</p>
+<p>“那份文档是二手来源——上个会话写下了它相信的东西，不是事实。让新会话跑一下认证测试，相信一手来源。”</p>
+</section>
+<section class="entry" id="handoff-artifact交接产物">
+<h3>Handoff artifact（交接产物）</h3>
+<p>交接产物是用作<a href="#handoff交接">交接</a>承载机制的一份文档——由一个<a href="#session会话">会话</a>写进<a href="#environment环境">环境</a>，供另一个会话读取。<a href="#spec规格">规格</a>、<a href="#ticket工单">工单</a>和计划文档都是交接产物。</p>
+<p>要写它的理由：<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的，所以会话里的任何东西都熬不过一次 <a href="#clearing清空上下文">Clearing</a>。决定、约束、做了一半的计划——都随承载它们的<a href="#context上下文">上下文</a>一起消失。环境会持续存在。把重要的状态写进文件，就是把它挪到下一个会话能读回来的地方。</p>
+<p>这份产物是<a href="#secondary-source二手来源">二手来源</a>——对会话工作的转述，不是工作本身。这正是它小到足以给新会话做简报的原因，也是它可能误导新会话的原因：它记录的是写它的那个会话所相信的东西，而它遗漏或弄错的一切，读者都看不见。在某个说法重要时，下一个会话应该对着<a href="#primary-source一手来源">一手来源</a>核实——代码、测试——而不是直接继承。</p>
+<p>好的交接产物是写给一个零上下文的会话读的。写具体的文件路径，而不是“我们讨论过的那个文件”。写了决定以及为什么，好让下一个会话不用重新翻案。写了什么已完成、什么还剩下。告诉写它的会话这份产物要给谁看会有帮助：“写一份交接文档，给一个对这项工作一无所知的新会话。”</p>
+<p>另一种承载机制是<a href="#compaction压缩">压缩</a>，它在内存里做总结。产物有两个优势：它躺在磁盘上，在任何东西依赖它之前你可以读并改正；它可以复用——同一份规格可以给五个并行会话做简报。</p>
+<p><em>Usage:</em></p>
+<p>“这件事怎么在规划<a href="#agent智能体">智能体</a>和实现智能体之间分工？”</p>
+<p>“让规划者写一份交接产物——文件路径、决定、约束。实现者的会话一开始就指向这份交接产物，把它当作简报来用。”</p>
+</section>
+<section class="entry" id="spec规格">
+<h3>Spec（规格）</h3>
+<p>规格是描述一项跨多<a href="#session会话">会话</a>工作的<a href="#handoff-artifact交接产物">交接产物</a>——在造什么，而不是每个会话怎么做自己那份。它随工作推进而变。它由<a href="#ticket工单">工单</a>组成。</p>
+<p>规格的存在，是因为会话是一次性的，而大工作不是。任何要花掉不止一个<a href="#context-window上下文窗口">上下文窗口</a>的工作，都需要一个<a href="#context上下文">上下文</a>之外的家——智能体<a href="#environment环境">环境</a>里某个能熬过 <a href="#clearing清空上下文">Clearing</a> 的地方，无论是仓库里的文件、GitHub issue，还是智能体能访问的 issue 跟踪器。规格就是那个家：目标、约束、到目前为止的决定，以及工单清单和各自的状态。任何新会话读了它，就能知道工作进展到哪，而不必继承上一个会话积累的噪音。</p>
+<p>规格有几种可辨认的风格，大多继承自团队原本写东西的方式。一份 <em>产品需求文档</em>（PRD）偏向面向用户的“做什么”和“为什么”——功能、行为、验收标准。一份 <em>设计文档</em> 或 <em>RFC</em> 偏向技术——选定的方案、被否掉的备选、权衡。在规模最小的一端，一份带工单清单的 <code>plan.md</code> 也能为跨会话功能起到同样的作用。风格不如它的作用重要：对<a href="#agent智能体">智能体</a>来说，这些其实是同一回事——它在每个会话开始时读的那份持久的意图陈述。</p>
+<p><em>Usage:</em></p>
+<p>“这些应该都放在一个会话里吗？”</p>
+<p>“不，写成一份规格——拆成工单，每个工单在自己的会话里跑。想把整件事塞进一个上下文，还没做到一半就会撞上<a href="#smart-zone智能区">迟钝区</a>。”</p>
+</section>
+<section class="entry" id="ticket工单">
+<h3>Ticket（工单）</h3>
+<p>工单是把工作范围限定在一个<a href="#session会话">会话</a>里的<a href="#handoff-artifact交接产物">交接产物</a>。它可以独立存在，也可以作为<a href="#spec规格">规格</a>的一个子项挂在下面。工单可以被兄弟工单阻塞，也可以阻塞它们，所以工作的顺序来自它们的依赖图，而不是一份线性的计划。</p>
+<p>决定性的约束是规模：一个会话。工单应该能在一个会话漂出<a href="#smart-zone智能区">智能区</a>之前完成——而这个约束是可检验的。如果你工单上的会话经常在工作完成前就开始退化，说明工单太大，拆开。如果每个会话把大部分<a href="#context上下文">上下文</a>花在准备工作上，只干了五分钟活，说明工单太小，合并。</p>
+<p>好的工单是写给一个没有其他上下文的读者的。目标、验收标准，以及指向相关文件和决定的<a href="#context-pointer上下文指针">上下文指针</a>——足以让这个会话直接开始工作，而不必重新推导上一个会话知道的东西。</p>
+<p>依赖图也是让并行成为可能的东西。互相独立的工单——图的叶子节点——可以各自在自己的会话里同时运行。这是同时运行多个智能体的有效方式。在<a href="#software-factory软件工厂">软件工厂</a>里，一个工单被标记为就绪，本身就是启动它那个会话的触发器。</p>
+<p><em>Usage:</em></p>
+<p>“迁移规格我该从哪开始？”</p>
+<p>“看工单图——schema 变更阻塞回填，回填阻塞 API 切换。挑一个叶子节点，在它上面跑一个会话。”</p>
+</section>
+<section class="entry" id="compaction压缩">
+<h3>Compaction（压缩）</h3>
+<p>压缩是在内存里完成的一次<a href="#handoff交接">交接</a>：上一个<a href="#session会话">会话</a>的历史被总结，摘要给一个新会话播种。它在设计上就是有损的：对话记录是<a href="#primary-source一手来源">一手来源</a>，摘要是<a href="#secondary-source二手来源">二手来源</a>——用细节换空间。由用户手动触发，或通过<a href="#autocompact自动压缩">自动压缩</a>自动触发。</p>
+<p>机制是这样的：<a href="#context-window上下文窗口">上下文窗口</a>有限，长会话会把它填满——每个<a href="#tool-result工具结果">工具结果</a>、每个读过的文件、每次走错的路，都留在历史里。当它变重时，<a href="#harness">Harness</a>请<a href="#model模型">模型</a>总结这个会话，把原始历史丢掉，用摘要给新会话播种。没进入摘要的东西，就从上下文里消失了。有些 Harness 会缓解这一点：把旧对话记录留在磁盘上，并在摘要里留一个指向它的<a href="#context-pointer上下文指针">上下文指针</a>——二手来源链接回它的一手来源，这样摘要丢掉的细节可以通过重读原文找回来。</p>
+<p>摘要由模型写，所以可以被引导。“保留 schema 的决定”会让生成的产物更有意识、更贴合你写下的要求。时机也重要——在阶段边界压缩，在计划定下来之后，而不是任务中途。</p>
+<p>对比 <a href="#clearing清空上下文">Clearing</a>：它丢掉一切，从冷启动开始；压缩试图把要点带过去，Clearing 则赌这些要点已经写在某个更好的地方了。</p>
+<p><em>Usage:</em></p>
+<p>“<a href="#context上下文">上下文</a>越来越重，而我还有一轮测试要做。”</p>
+<p>“开始前先压缩——把必须活下来的东西写进摘要提示词，让新会话保留 schema 决定、丢掉探索过程。”</p>
+</section>
+<section class="entry" id="autocompact自动压缩">
+<h3>Autocompact（自动压缩）</h3>
+<p><a href="#compaction压缩">压缩</a>：当<a href="#context-window上下文窗口">上下文窗口</a>接近满时，由 <a href="#harness">Harness</a> 自动触发。</p>
+<p>Harness 盯着上下文窗口有多满。当它越过一个阈值——常常在 80% 左右——它会暂停，请<a href="#model模型">模型</a>总结到目前为止的<a href="#session会话">会话</a>，用摘要给新会话播种。工作随后继续，就像什么都没发生。</p>
+<p>但确实发生了什么。压缩是有损的，而自动压缩的有损，发生在一个你没选的时刻。手动压缩发生在阶段边界，那时你能告诉模型保留什么。自动压缩在任务中途触发，只要碰到阈值就触发——可能正赶上你重构做到一半，由摘要自行判断你的哪些决定值得保留。典型的症状是：<a href="#agent智能体">智能体</a>自信地继续，却悄悄忘了你一小时前立下的约束，而你只在它的工作开始与约束矛盾时才发现。</p>
+<p>防御的办法是别让它触发。盯着上下文指示器，在自然的边界手动压缩，或者把决定写进磁盘上的计划文档或<a href="#handoff-artifact交接产物">交接产物</a>，这样任何摘要都弄不丢它们。大多数 Harness 还允许你调整缓冲区——把阈值提前或推后，或者完全关掉自动压缩——这样你可以调它在触发前保留多少余量。</p>
+<p><em>Usage:</em></p>
+<p>“它好像不记得我们早先关于 schema 的决定。”</p>
+<p>“自动压缩在<a href="#turn轮次">轮次</a>之间触发了——早期的决定被总结，我们肯定丢了点什么。重新载入计划文档，或者下次手动压缩，好让你控制保留什么。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 6 — Memory and Steering（记忆与引导）</h2>
+<section class="entry" id="memory-system记忆系统">
+<h3>Memory system（记忆系统）</h3>
+<p>记忆系统是试图让<a href="#agent智能体">智能体</a>跨<a href="#session会话">会话</a>变得<a href="#stateful有状态">有状态</a>的系统。它在会话期间把信息持久化到<a href="#environment环境">环境</a>，并在未来会话开始时重新载入<a href="#context-window上下文窗口">上下文窗口</a>，这样在用户 <a href="#clearing清空上下文">Clearing</a> 会话之后，智能体仍然保有连续性。</p>
+<p>记忆系统由两部分组成。写路径：会话期间，智能体把它学到的东西——你表达的一个偏好、关于项目的一个事实——写成环境里的文件。读路径：会话开始时，<a href="#harness">Harness</a> 把这些文件或它们的索引载回上下文窗口。许多 Harness 自带记忆系统——Claude Code 的 <code>/memory</code> 就是其一——但你也可以自己搭一个：一个笔记目录，加上 <a href="#agentsmd">AGENTS.md</a> 里一条查阅它的指令。</p>
+<p>常驻载入的内容都要面对同样的权衡。记忆会累积，所以大多数系统载入一行索引，把正文留在<a href="#context-pointer上下文指针">上下文指针</a>后面，而不是全部内联。而且记忆是<a href="#secondary-source二手来源">二手来源</a>，所以会漂移：三月记录的一个事实，六月仍会以同样的可信度被载入，哪怕项目早已往前走。记忆系统需要修剪，和 AGENTS.md 一样。</p>
+<p><em>Usage:</em></p>
+<p>“我老是得重新告诉它我用的是 Postgres，不是 MySQL。”</p>
+<p>“接一个记忆系统——在第一个<a href="#turn轮次">轮次</a>把它学到的东西写进<a href="#filesystem文件系统">文件系统</a>，在会话开始时重新载入。<a href="#model模型">模型</a>本身是<a href="#stateless无状态">无状态</a>的；记忆层伪造了连续性。”</p>
+</section>
+<section class="entry" id="agentsmd">
+<h3>AGENTS.md</h3>
+<p>AGENTS.md 是<a href="#environment环境">环境</a>里的一个文件，<a href="#harness">Harness</a> 在<a href="#session会话">会话</a>开始时把它载入<a href="#context-window上下文窗口">上下文窗口</a>——项目给<a href="#agent智能体">智能体</a>的常设说明。这是跨 Harness 的约定；有些 Harness 也有自己的变体（Claude Code 的是 CLAUDE.md）。</p>
+<p>因为它会自动载入，这是避免跨会话重复自己的一个办法。<a href="#model模型">模型</a>是<a href="#stateless无状态">无状态</a>的——你在一个会话里给的纠正，下一个会话就没了，你最后会告诉每个新会话：项目用 pnpm、测试要用某个特定参数、某个目录是生成的别动。当你为同一件事纠正过智能体两次，那条纠正就是 AGENTS.md 的候选行。</p>
+<p>合适的内容是智能体无法从代码里推导出来的东西：构建和测试命令、代码库本身不明显的约定、硬约束（“永远别改生成的客户端”）。要简短，用陈述句——它是说明，不是文档。</p>
+<p>代价是里面的一切都常驻载入。指令会累积，大多数与当下的任务无关，而一份很长的 AGENTS.md 既费 Token，又稀释自己——上下文里的指令越多，模型就越难可靠地遵循其中任何一条。</p>
+<p><em>Avoid:</em> 把应该<a href="#progressive-disclosure渐进式披露">渐进式披露</a>的内容放进 AGENTS.md——里面的任何东西都会在每个<a href="#turn轮次">轮次</a>、每个会话里付出 <a href="#token词元">Token</a> 成本，不管那个会话需不需要它。风格指南可以放在一个<a href="#skill技能">Skill</a>或<a href="#context-pointer上下文指针">上下文指针</a>后面；AGENTS.md 留给那些处处适用的行。</p>
+<p><em>Usage:</em></p>
+<p>“为什么每个会话一开始就已经烧掉 4k Token？”</p>
+<p>“看看 AGENTS.md——有人把整个风格指南粘进去了，而不是把它放在一个 Skill 后面。”</p>
+</section>
+<section class="entry" id="progressive-disclosure渐进式披露">
+<h3>Progressive disclosure（渐进式披露）</h3>
+<p>渐进式披露是只载入<a href="#agent智能体">智能体</a>此刻需要的<a href="#context上下文">上下文</a>，其余用<a href="#context-pointer上下文指针">上下文指针</a>指过去。这个说法借自 UI 设计，原意是只向用户展示与当前任务相关的控件，其余的要点击一下才出现。</p>
+<p>这项技术存在，是因为上下文有双重成本。预先载入的每个 <a href="#token词元">Token</a> 都在每个<a href="#turn轮次">轮次</a>按<a href="#input-tokens输入-token">输入 Token</a>计费，而且不管智能体需不需要，每个 Token 都消耗<a href="#attention-budget注意力预算">注意力预算</a>。一份塞满完整风格指南、部署手册和数据库约定的 <a href="#agentsmd">AGENTS.md</a>，会让智能体在这些方面都表现更差——对当前任务重要的指令被不重要的指令稀释了。征兆是：智能体无视你明知就在它上下文里的规则——它们在里面，但被埋住了。</p>
+<p>渐进式披露把这一点反过来。保持常驻载入的那一层很小——每个主题一句话，加一个指向细节所在位置的指针。智能体写组件时读风格指南，部署时读部署手册，修测试时两个都不读。<a href="#skill技能">Skill</a>就是 <a href="#harness">Harness</a> 内置的这种模式：每个<a href="#session会话">会话</a>载入一段简短描述，只有被触发时才载入完整指令。</p>
+<p><em>Usage:</em></p>
+<p>“我该把整个风格指南倒进 AGENTS.md 吗？”</p>
+<p>“不——用渐进式披露。把风格指南做成一个 Skill，智能体真正需要写组件时才载入。AGENTS.md 每个轮次都要付 Token 成本。”</p>
+</section>
+<section class="entry" id="context-pointer上下文指针">
+<h3>Context pointer（上下文指针）</h3>
+<p>上下文指针是一份文档里的提及，指向另一份文档，让<a href="#agent智能体">智能体</a>只在任务需要时把它拉进<a href="#context-window上下文窗口">上下文窗口</a>。它是构成<a href="#progressive-disclosure渐进式披露">渐进式披露</a>的单位。</p>
+<p>用指针（而不是内联内容）的理由是成本。指针在上下文窗口里只占一行。它背后的文档可能有几千个 <a href="#token词元">Token</a>，但在智能体真的顺着指针走之前，这些 Token 不花任何钱。把一份 2,000 Token 的手册内联进 <a href="#agentsmd">AGENTS.md</a>，每个<a href="#session会话">会话</a>都要为它付钱；换成“部署流程：见 <code>internal/deploy.md</code>”，就只有会部署的会话才会载入它。任务匹配时，智能体通过一次<a href="#tool-call工具调用">工具调用</a>顺着指针走。</p>
+<p>一个指针要起作用需要两部分：一个稳定的路径，以及足够让智能体判断“值得跟过去”的描述。光秃秃的路径是智能体没有理由跟随的指针；一句没有提示内容的“见 <code>internal/deploy.md</code>”，会被一个本就需要它的会话跳过。要把这一行写得匹配任务出现的方式：“发布、部署或回滚——先读 <code>internal/deploy.md</code>”。</p>
+<p>一旦你留意，指针到处都是：AGENTS.md 里的行、<a href="#skill技能">Skill</a>描述（Harness 载入描述，Skill 正文等在后面）、目录列表里的文件名、文档之间的链接。</p>
+<p>指针也可以把<a href="#secondary-source二手来源">二手来源</a>系回它所派生自的<a href="#primary-source一手来源">一手来源</a>——写明原始对话记录名称的压缩摘要，以及写明它所描述源文件名称的文档。这让二手来源丢失的信息可以找回：当摘要被证明不够时，智能体顺着指针读原文，而不是将就着用摘要保留的那部分。</p>
+<p><em>Avoid:</em> “reference”——太干，传达不出“顺着它会把更多上下文拉进来”。“portal”——太花哨。</p>
+<p><em>Usage:</em></p>
+<p>“AGENTS.md 越来越大了。”</p>
+<p>“它里面大部分应该是上下文指针，而不是内容。常驻规则保持内联；把部署手册和风格指南做成 Skill，在后面留一个上下文指针。”</p>
+</section>
+<section class="entry" id="skill技能">
+<h3>Skill（技能）</h3>
+<p>Skill 是作为一个单元打包的可传授能力——把一项任务做好的指令和资源，留在<a href="#environment环境">环境</a>里，直到一个<a href="#context-pointer上下文指针">上下文指针</a>为当前任务把它拉进<a href="#context-window上下文窗口">上下文窗口</a>。它是 <a href="#harness">Harness</a> 里<a href="#progressive-disclosure渐进式披露">渐进式披露</a>的单位。</p>
+<p>Skill 是一项开放标准，定义在 <a href="https://agentskills.io" target="_blank" rel="noopener">agentskills.io</a>——最初由 Anthropic 开发，后来被大多数主流 Harness 采纳，所以写一次的 Skill 可以在这些 Harness 之间通用。格式是一个文件夹，包含：</p>
+<ul>
+<li>一个 <code>SKILL.md</code> 文件——元数据（至少名称和描述）加上指令本身</li>
+<li>可选：<a href="#agent智能体">智能体</a>可以运行的脚本</li>
+<li>可选：指令指向的模板和参考材料</li>
+</ul>
+<p>默认情况下，只有名称和描述留在<a href="#context上下文">上下文</a>里。当智能体的任务匹配时，它载入其余部分。在那之前，Skill 几乎不占空间——一两句 <a href="#token词元">Token</a>，不管它的完整指令有多大。</p>
+<p>这把 Skill 和 <a href="#agentsmd">AGENTS.md</a> 区分开来：后者不管任务是什么，都会载入每个<a href="#session会话">会话</a>。Skill 在某一类工作出现时才被读——发布、搭建新服务、写迁移——其余时间被忽略。</p>
+<p><em>Avoid:</em> “<a href="#tool工具">工具</a>”——工具是智能体<em>调用</em>的东西；Skill 是它<em>读</em>的指令。</p>
+<p><em>Usage:</em></p>
+<p>“部署手册该放哪？”</p>
+<p>“做成 Skill——只有任务涉及部署时智能体才载入它。放在 AGENTS.md 里，它就会每个<a href="#turn轮次">轮次</a>都为一个每周才用一次的东西烧 Token。”</p>
+</section>
+<section class="entry" id="subagent子智能体">
+<h3>Subagent（子智能体）</h3>
+<p>子智能体是由另一个<a href="#agent智能体">智能体</a>通过<a href="#tool-call工具调用">工具调用</a>生成的智能体。它在自己的<a href="#session会话">会话</a>里、带着自己的<a href="#context-window上下文窗口">上下文窗口</a>运行，只回报一个<a href="#tool-result工具结果">工具结果</a>。它有别于<a href="#handoff交接">交接</a>——父智能体明确期待子智能体返回结果；交接则没有返回结果的路径。<strong>不能继续生成子智能体</strong>——这棵树只有一层。子智能体的用途是隔离<a href="#context上下文">上下文</a>，而不是组合成层级结构。</p>
+<p>要点是把嘈杂的工作挡在父智能体的上下文之外。一次大范围搜索或一场漫长的读文件远征，会产生好几页工具结果，其中大多数只在找到答案的那一小段时间里有用。在父智能体里运行，这一切会在会话余下的时间里留在父上下文里。在子智能体里运行，噪音则填满一个一次性窗口——只有最终报告落进父上下文。报告是<a href="#secondary-source二手来源">二手来源</a>：父智能体拿到的是子智能体对自己发现了什么的转述，不是原始结果，所以报告漏掉的东西，父智能体看不见。</p>
+<p>子智能体还可以并发运行——一个父智能体可以同时派几个出去，处理互相独立的工作。</p>
+<p><em>Usage:</em></p>
+<p>“grep 的结果快把我的上下文撑爆了。”</p>
+<p>“派一个子智能体去做搜索——它会在噪音上烧掉自己的上下文窗口，只回报你真正需要的两个文件路径。”</p>
+</section>
+</section>
+<section class="chapter">
+<h2>Section 7 — Patterns of Work（工作模式）</h2>
+<section class="entry" id="human-in-the-loop人在回路">
+<h3>Human-in-the-loop（人在回路）</h3>
+<p>人在回路是一种工作模式：一个或多个人在<a href="#session会话">会话</a>中与<a href="#agent智能体">智能体</a>结对——实时审查、纠偏或协作。人在场并参与，不只是给单个操作放行。</p>
+<p>对比的是 <a href="#afk离开键盘">AFK</a> 工作：智能体无人看管地运行，事后由你判断结果。人在回路意味着趁问题的代价还小就抓住它：你看到智能体去够错的文件、误读需求，或者开始走进死路，用一句话就把它拉回来——而不是二十分钟后才发现一整段自信的工作都建立在那个错误上。智能体并不能可靠地知道自己什么时候偏了；没人管的时候，它们往往继续往前推，而不是停下来问。</p>
+<p>哪种模式合适取决于工作。定义清楚、风险低、容易验证的任务适合 AFK。含糊、不可逆，或者完成后的结果你难以审查的任务——schema 迁移、棘手的设计决定、任何触及生产的事——适合留在回路里。判断标准基本上是：走错一步有多贵，你多晚才会发现？</p>
+<p>有些工作天生就在回路里，因为你的反应就是输入。<a href="#grilling盘问">盘问</a>只有你在场回答问题时才成立；<a href="#prototyping原型制作">原型制作</a>只有你在场对产物作出反应时才成立。</p>
+<p>留在回路里要花你的注意力，而注意力是稀缺资源。越来越会使用智能体的表现之一，就是把更多工作安全地移出回路——用计划、<a href="#automated-check自动化检查">自动化检查</a>，以及在最后做<a href="#human-review人工审查">人工审查</a>，而不是全程盯着。一个<a href="#software-factory软件工厂">软件工厂</a>把这一点推得更远：它用触发器启动会话，连开工都不需要你。</p>
+<p><em>Usage:</em></p>
+<p>“这个 AFK 跑一夜？”</p>
+<p>“不行，schema 迁移——保持人在回路。我想看着每一步，如果它选错了回填的列，我能当场纠偏。”</p>
+</section>
+<section class="entry" id="afk离开键盘">
+<h3>AFK（离开键盘）</h3>
+<p>AFK 就是离开键盘（away from keyboard）。一种工作模式：用户启动一个<a href="#session会话">会话</a>，然后离开，让<a href="#agent智能体">智能体</a>无人看管地运行。它是 <a href="#ai人工智能">AI</a> 编程的吞吐量倍增器——许多 AFK 会话可以并行运行，而你睡觉、吃饭或做别的事。通常需要宽松的<a href="#permission-mode权限模式">权限模式</a>加上<a href="#sandbox沙箱">沙箱</a>才安全。</p>
+<p>你不在的时候，智能体处理含糊之处的方式不同。你盯着时，一个含糊的决定会以问题的形式浮现，由你回答；你走开之后，智能体挑一个默认值继续走，之后每个决定都建立在这个猜测上。典型的失败是：回来时看到好几个小时的工作，做得完整又自信，却全都建立在头十分钟的一个错误判断上。工作并不潦草——它连贯，只是连贯地错着。</p>
+<p>既然运行时你无法给输入，就在之前和之后给。之前：把含糊之处先解决掉——一次<a href="#grilling盘问">盘问</a>会话、一份写好的<a href="#spec规格">规格</a>——让智能体独自填补的空隙少一些。期间：<a href="#automated-check自动化检查">自动化检查</a>和<a href="#automated-review自动化审查">自动化审查</a>顶替你没能给出的那份注意力，对机械上能抓住的东西快速失败。之后：运行结束时得到可审查的东西——一个 PR，而不是已经合并的改动。AFK 并没有取消<a href="#human-review人工审查">人工审查</a>；它把所有人工审查都推迟到最后，所以最后到达的东西必须值得审查。这也是为什么 <a href="#ax智能体体验">AX</a> 在 AFK 运行里最重要——没人看着时，环境是智能体唯一能得到的支持。</p>
+<p><em>Avoid:</em> “后台智能体”——它把重心放在机器上（“在后台运行”），而不是人的模式上（“用户已经走开”）。AFK 点明的正是那个要紧的事实：用户没有在看。</p>
+<p><em>Usage:</em></p>
+<p>“这个我用 AFK 跑——重构上挂三个沙箱智能体，早上看 PR。”</p>
+<p>“用 <a href="#agent-mode智能体模式">bypass permissions</a>？”</p>
+<p>“对，只读的<a href="#filesystem文件系统">文件系统</a>，不出网。”</p>
+</section>
+<section class="entry" id="automated-check自动化检查">
+<h3>Automated check（自动化检查）</h3>
+<p>自动化检查是在<a href="#environment环境">环境</a>里运行的一种确定性验证——测试、类型检查、lint、构建、pre-commit 钩子。只有通过或失败，没有判断。它是<a href="#agent智能体">智能体</a>不需要任何人参与就能自我纠正的信号。不稳定的测试是坏掉的检查，而不是不算检查；自动化检查在<em>设计上</em>就是确定性的。</p>
+<p>自我纠正以循环的方式工作。智能体做一次改动，通过一次<a href="#tool-call工具调用">工具调用</a>运行检查，失败输出落进它的<a href="#context-window上下文窗口">上下文窗口</a>——一个带文件和行号的类型错误，一个带期望值和实际值的失败断言。这足以让智能体修好问题并再次运行检查，一圈一圈直到通过，全程无需人在回路。确定性让这个循环值得信任：同一份代码总是产生同样的判定，所以“通过”才有意义。不稳定的检查会毒化它——智能体会去“修”本来没问题的代码，或者在真实失败仍然存在时反复重试，直到侥幸通过。</p>
+<p>这就是为什么好的检查构成代码库 <a href="#ax智能体体验">AX</a> 的一大部分。在有着严格类型、快速测试套件和 linter 的仓库里，智能体在你能看到之前就能抓住自己大部分错误；在一个这些都没有的仓库里，智能体产出什么就交付什么。这个差异在 <a href="#afk离开键盘">AFK</a> 运行里最重要，因为检查是运行期间唯一发生的验证。但检查只能抓住它断言的东西——检查全绿意味着被断言的属性成立，不意味着代码是对的。那些只能靠判断补上的空隙，正是<a href="#automated-review自动化审查">自动化审查</a>和<a href="#human-review人工审查">人工审查</a>要做的事。</p>
+<p><em>Avoid:</em> “反馈回路”/“背压”——这两个说法都把检查和审查混在一起。<em>Avoid:</em> “测试”——测试是自动化检查，但不是所有自动化检查都是测试。</p>
+<p><em>Usage:</em></p>
+<p>“AFK 运行里，智能体一直交付坏代码。”</p>
+<p>“<a href="#sandbox沙箱">沙箱</a>里接了哪些自动化检查？”</p>
+<p>“只有单元测试。”</p>
+<p>“加上类型检查和 lint——它会在 PR 落地之前照着这些先把自己纠正过来。”</p>
+</section>
+<section class="entry" id="automated-review自动化审查">
+<h3>Automated review（自动化审查）</h3>
+<p>自动化审查是一个<a href="#agent智能体">智能体</a>审查另一个智能体的工作，通常使用不同的<a href="#model模型">模型</a>或<a href="#system-prompt系统提示词">系统提示词</a>。它是非确定性的：它形成判断。它可以在任何地方运行——合并前在 PR 上、事后在提交历史上、会话中途作为<a href="#subagent子智能体">子智能体</a>。CI 里的 LLM-as-judge 是自动化审查，不是<a href="#automated-check自动化检查">自动化检查</a>；决定类别的是断言<em>做什么</em>，而不是它在哪里运行。</p>
+<p>和工作智能体分开，正是它起作用的原因。让写代码的智能体审查自己的工作，收获很小——产生这个 bug 的<a href="#session会话">会话</a>里，也包含着产生这个 bug 的推理过程，智能体把自己的结论读回来当作确认。换一个拥有全新<a href="#context-window上下文窗口">上下文窗口</a>的审查者没有这种包袱：它像陌生人一样看这份 diff，而审查正依赖于此。不同的模型或专门用于审查的系统提示词会进一步加强这一点——不同的盲区，以及一个把范围限定在你真正关心的事情上的系统提示词（安全、API 契约、性能），而不是含糊的“找找问题”。</p>
+<p>它嵌在其他审查层之间。自动化检查是确定性的，抓住机械上能断言的东西；<a href="#human-review人工审查">人工审查</a>昂贵，扩展性最差。自动化审查在中间：它以机器的成本抓住那些需要判断的问题——一个误导性的函数名、一个漏掉的边界情况。因为它非确定性，它可能漏掉东西，也可能把没问题的地方标出来；把它当成在人看之前抬高下限的过滤器，而不是取代人的关卡。</p>
+<p><em>Avoid:</em> “AI 审查”/“智能体审查”——太含糊，分不清它和工作智能体本身。</p>
+<p><em>Usage:</em></p>
+<p>“<a href="#afk离开键盘">AFK</a> 运行产生了太多坏 PR。”</p>
+<p>“在合并前加一步自动化审查——不同的模型、单独的系统提示词，范围限定在安全和契约变更上。”</p>
+</section>
+<section class="entry" id="human-review人工审查">
+<h3>Human review（人工审查）</h3>
+<p>人工审查是用户阅读<a href="#agent智能体">智能体</a>产出的代码，并据此形成判断。读 diff 或改动过的文件算；读智能体对所作所为的<em>描述</em>不算——叙述不是产物。描述是<a href="#secondary-source二手来源">二手来源</a>，由被审查的一方写成；diff 是<a href="#primary-source一手来源">一手来源</a>，审查意味着读它。</p>
+<p>智能体提高了代码产出量，所以审查成了瓶颈。一个有用的想法是把不同的审查策略分层。<a href="#automated-check自动化检查">自动化检查</a>抓住机械性失败，<a href="#automated-review自动化审查">自动化审查</a>抓住可以描述出来的失败，人工审查留给只有你能判断的事——这个改动是不是正确的改动、这个方案是否契合代码库、这东西到底该不该存在。</p>
+<p>审查也是越早越便宜。开工前读一份计划，或者中途读一个小 diff，只要几分钟；<a href="#afk离开键盘">AFK</a> 运行之后去挖一个完成的分支，要久得多。把审查检查点放在哪里，是一项<a href="#human-in-the-loop人在回路">人在回路</a>的决定，不是事后才想到的事。</p>
+<p><em>Avoid:</em> 单说“代码审查”——分不清是人工还是自动化。</p>
+<p><em>Usage:</em></p>
+<p>“我人工审查了 AFK 的输出。”</p>
+<p>“你是读了 diff，还是只读了总结？”</p>
+<p>“diff。总结说它删了死代码——结果那个函数是从一个生成文件里被调用的。”</p>
+</section>
+<section class="entry" id="vibe-coding氛围编程">
+<h3>Vibe coding（氛围编程）</h3>
+<p>Vibe coding 是一种工作模式：用户接受<a href="#agent智能体">智能体</a>的代码，不做<a href="#human-review人工审查">人工审查</a>。diff 被当作不透明的——重要的是程序行为对不对，而不是里面写了什么。<a href="#automated-review自动化审查">自动化审查</a>和<a href="#automated-check自动化检查">自动化检查</a>仍可能运行；Vibe coding 对这两种都没表态。</p>
+<p>这个词来自 Andrej Karpathy，他在 <a href="https://x.com/karpathy/status/1886192184808149383" target="_blank" rel="noopener">2025 年初创造了它</a>：你“完全交给感觉”，并且“甚至忘掉代码的存在”——描述你想要什么，接受返回的东西，然后通过运行它来判断。</p>
+<p>Vibe coding 用检查换速度。读 diff 通常是智能体驱动的工作里最慢的一步，所以省掉它就移除了主要瓶颈。对于失败代价很低的代码——<a href="#prototyping原型制作">原型</a>、一次性脚本、内部工具——这是合理的交换。风险随代码的寿命和利害关系增长。</p>
+<p>代价会在之后到达。Vibe 出来的改动累积成一个没人读过的代码库，而行为是唯一被检查过的东西——所以行为不会暴露的一切，比如写进日志的密钥、缺失的边界情况、悄悄出错的数据处理，都会在无人看见的情况下上线。第一次有人调试这个系统，就是第一次有人读这份代码。人工审查没了之后，还在运行的自动化验证——测试、类型、自动化审查——就是代码唯一要过的关卡。把同样的立场应用到一个代码库或其中一部分，而它的改动来自<a href="#software-factory软件工厂">软件工厂</a>，那就是<a href="#dark-factory黑灯工厂">黑灯工厂</a>。</p>
+<p><em>Avoid:</em> 把“Vibe coding”当成“低质量 AI 编程”的同义词——这个词命名的是审查立场，不是产出的代码。</p>
+<p><em>Usage:</em></p>
+<p>“你读它在认证流程里改了什么吗？”</p>
+<p>“我用 Vibe coding 写的——登录还能用，我就检查了这一点。”</p>
+<p>“推之前读一下 diff，在认证上凭感觉，密钥就是这么泄露进日志的。”</p>
+</section>
+<section class="entry" id="design-concept设计概念">
+<h3>Design concept（设计概念）</h3>
+<p>设计概念是对被构建之物的共同理解，用户和<a href="#agent智能体">智能体</a>共有，但独立于任何载体。布鲁克斯的术语（<em>The Design of Design</em>）：对话、<a href="#handoff-artifact交接产物">交接产物</a>和代码都是试图捕捉或逼近设计概念的载体，但它们没有一个<em>就是</em>设计概念。设计概念的质量，通过建立它的对话质量来感受。</p>
+<p>这个词命名了一种熟悉的挫败感背后的空隙：智能体完全照你说的写，结果还是不对。通常的原因是你还没有完全想清楚自己想要什么。设计概念在你自己的脑子里就没完成——你的提示词捕捉了已经想清楚的部分，对没想清楚的部分保持沉默。智能体用自己的假设填补了那些沉默之处，因为没有可供对齐的东西。没有任何东西出故障。只是不存在共享的设计概念，因为还没有一个完整的概念可分享。</p>
+<p>判断设计概念是否共享，和你判断一位同事是否与你想的一样，用的是同一种方法：对方开始用你会用的方式，回答你还没问的问题。在那之前，工作就是对话——<a href="#grilling盘问">盘问</a>是刻意为之的版本——太早写<a href="#spec规格">规格</a>，只是把错位捕捉进一个更耐久的载体。设计概念也会随着你学习而移动；载体落后于它，这就是为什么一份忠实于上周理解的规格，仍可能误导这周的会话。</p>
+<p><em>Usage:</em></p>
+<p>“它完全照我要的写，结果还是不对。”</p>
+<p>“你们还没有共享的设计概念——它在用假设填空。继续谈，直到取消、退款和部分履约在你俩之间全部对齐，再让它写规格。”</p>
+</section>
+<section class="entry" id="grilling盘问">
+<h3>Grilling（盘问）</h3>
+<p>盘问是一种与<a href="#agent智能体">智能体</a>共同发展<a href="#design-concept设计概念">设计概念</a>的技术：智能体像苏格拉底一样向用户提问，一次一个决定，并为每个决定提出推荐答案。它压住急于拿出一份完整计划的冲动——在概念稳定之前，不写任何<a href="#handoff-artifact交接产物">交接产物</a>。</p>
+<p>这项技术存在，是因为智能体会悄悄填满空隙。让它从两行提示词写一份<a href="#spec规格">规格</a>，它不会在你还没做决定的点上停下来问你——它会挑默认值并写进去。结果看起来完整，猜测和选择无法区分，于是你很晚才发现：在审查时，或者当已经做好的功能以你从未选过的方式处理某个边界情况时。盘问把这一点反过来——智能体不能猜，只能问。</p>
+<p>这是一种<a href="#human-in-the-loop人在回路">人在回路</a>的技术：你的回答就是输入。当一个问题无法用对话回答——你得看到那个东西——就切换到<a href="#prototyping原型制作">原型制作</a>。</p>
+<p><em>Usage:</em></p>
+<p>“它直接去写规格，把取消逻辑搞错了。”</p>
+<p>“先盘问它——让它问你部分取消、退款和时间安排，再让它往文档里写任何东西。在对话里解决比在代码里便宜。”</p>
+</section>
+<section class="entry" id="prototyping原型制作">
+<h3>Prototyping（原型制作）</h3>
+<p>原型制作是让<a href="#agent智能体">智能体</a>快速做一个粗糙版本，适用于对话保真度太低、你需要一个真实产物来讨论的时候。</p>
+<p><a href="#grilling盘问">盘问</a>在对话里解决设计决定。对话便宜，但保真度低：有些问题无法用语言回答——一次交互感觉如何、一个 API 形状在真实调用代码里是否顺手、布局在真实数据规模下是否成立。盘问到某个问题时，你诚实的回答是“我不知道，我得亲眼看看”。过了这个点，讨论就开始绕圈。改为让智能体把东西做出来，看一看，再带着答案回到对话里。</p>
+<p>智能体降低了构建成本，这才让这件事可行。一个过去要一天才能搭出雏形的粗糙版本，现在几分钟就能出来，所以值得经常做。这是一种<a href="#human-in-the-loop人在回路">人在回路</a>的技术：原型在那里，供你作出反应。</p>
+<p>你通常不会只看一眼就停。和原型一起迭代——反应、要求修改、再反应——每一轮都对着真实产物解决另一个决定，保真度高于对话所能达到的。</p>
+<p>原型不必处处粗糙。你可以把你真正在评估的部分做到生产质量，这样当决定落定，你反应过的那个组件或 API 可以直接转移进真实代码库。这让原型成为<a href="#spec规格">规格</a>应当引用的必要材料。</p>
+<p><em>Usage:</em></p>
+<p>“我们已经为这个向导该是一页还是三步吵了半小时。”</p>
+<p>“文字解决不了——让智能体把两种都做出来。我们点一遍，五分钟就知道了。”</p>
+</section>
+<section class="entry" id="dx开发者体验">
+<h3>DX（开发者体验）</h3>
+<p>开发者体验（DX）——代码库和工具链让人类做好工作有多容易。好的 DX 是快速反馈、清晰的错误信息、能回答你真正问题的文档，以及一次就能跑通的初始设置。这个词远早于 AI 编程；它出现在这个词典里，主要是作为 <a href="#ax智能体体验">AX</a> 的对照。</p>
+<p>DX 是人和代码库之间的交互——仅此而已。两类使用者之间主要的差别是：人<a href="#stateful有状态">有状态</a>，智能体<a href="#stateless无状态">无状态</a>。人学一次代码库，之后每天都带着这份知识，这就是为什么糟糕的 DX 下团队也撑得下去：人们把推送攒起来绕过慢 CI，在 Slack 里问一次绕过缺失的文档，记住东西放在哪来绕过混乱的结构。变通办法不断累积，一个团队最终在一个和他们作对的代码库里保持高产。</p>
+<p><a href="#agent智能体">智能体</a>面对同一个代码库，却没有这些积累。跨<a href="#session会话">会话</a>无状态，智能体每次都从头重新学这个代码库——它受益于快速测试套件和清晰的错误信息，但昨天弄明白的东西已经没了，除非它被写进<a href="#environment环境">环境</a>，而智能体只能通过<a href="#tool-result工具结果">工具结果</a>感知环境。这就是 AX 指出的那个缺口：开发者换成智能体之后，DX 中仍然成立的那些部分，加上人没有的关切，比如保持<a href="#context-window上下文窗口">上下文窗口</a>空闲。</p>
+<p>重叠意味着 DX 投入常常顺便改善 AX——严格类型、快速测试、可预测的结构对两者都有帮助。分歧意味着并不总是如此：一份漂亮的入职文档对人有用一周，对智能体毫无用处，除非能从 <a href="#agentsmd">AGENTS.md</a> 链接到它。</p>
+<p><em>Usage:</em></p>
+<p>“我们的 DX 没问题——新人一周就能上手。”</p>
+<p>“能上手是因为有人陪了他们一周。智能体没有那一周；AX 要单独看。”</p>
+</section>
+<section class="entry" id="ax智能体体验">
+<h3>AX（智能体体验）</h3>
+<p>智能体体验（AX）——<a href="#environment环境">环境</a>在多大程度上适合一个<a href="#agent智能体">智能体</a>在代码库里做好工作。它是 <a href="#dx开发者体验">DX</a> 面向智能体的一侧。当同一个智能体在一个仓库里表现好、在另一个里表现差——同样的<a href="#model模型">模型</a>、同样的 <a href="#harness">Harness</a>——差异通常就是 AX。本能反应是怪模型或重写提示词；解决办法往往在仓库里。</p>
+<p>好的 AX 有三个主要维度：</p>
+<div class="table-wrap">
+<table style="min-width:14rem">
+<thead><tr><th>维度</th><th>好的 AX 是什么样</th></tr></thead>
+<tbody><tr><td>自动化检查</td><td>快速、确定性的<a href="#automated-check自动化检查">自动化检查</a>——类型、测试、lint——智能体可以据此自我纠正，不需要人</td></tr>
+<tr><td>架构</td><td>智能体不必读完全部代码就能穿行的代码库：可预测的结构、大量行为藏在小接口后面、名字能说明东西做什么</td></tr>
+<tr><td>空闲上下文</td><td><a href="#agentsmd">AGENTS.md</a>、<a href="#skill技能">Skill</a>和<a href="#tool工具">工具</a>保持精简，让<a href="#context-window上下文窗口">上下文窗口</a>的大部分可用于任务，智能体留在<a href="#smart-zone智能区">智能区</a>而不是被淹没</td></tr></tbody>
+</table>
+</div>
+<p>AX 和 DX 重叠——好的检查和干净的架构对两类使用者都有帮助——但两者并不总是一致。人容忍团队里口口相传的知识、慢 CI、“账单模块去问 Sarah”；智能体不行。智能体不会从 IDE 工具提示或漂亮仪表盘里受益；它们需要失败以文本形式出现在<a href="#tool-result工具结果">工具结果</a>里。一个代码库可以 DX 很好，AX 却很差。</p>
+<p><em>Avoid:</em> 把 AX 当成 DX 的同义词——两类使用者需要不同的投入。</p>
+<p><em>Usage:</em></p>
+<p>“智能体在 API 仓库里代码写得很好，在前端却写出一堆垃圾。”</p>
+<p>“API 仓库有严格类型和快速测试套件；前端两者都没有，还挂着四十个常驻 Skill。那是 AX 的缺口，不是模型的问题。”</p>
+</section>
+<section class="entry" id="software-factory软件工厂">
+<h3>Software factory（软件工厂）</h3>
+<p>软件工厂是一种工作体系：<a href="#agent智能体">智能体</a>的<a href="#session会话">会话</a>由触发器启动——一个 issue 被创建、一个定时计划、一次 CI 失败、另一个会话完成——而不是由人启动，于是更多工作以 <a href="#afk离开键盘">AFK</a> 运行，人的注意力则花在剩下那些需要<a href="#human-in-the-loop人在回路">人在回路</a>的决定上。</p>
+<p>没有工厂时，每个会话都因为有人启动它才开始。即使完全 AFK 的工作，也要等一个人打开会话、把它指向<a href="#ticket工单">工单</a>、让它跑起来。团队想交付的比这允许的更多。工厂只是把人的参与从启动会话这一环移除，未必移除其他环节。</p>
+<p>常见的触发器和它们启动的会话：</p>
+<div class="table-wrap">
+<table style="min-width:21rem">
+<thead><tr><th>触发器</th><th>启动的会话</th><th>例子</th></tr></thead>
+<tbody><tr><td>issue 被创建或打标签</td><td>探索、修 bug、实现</td><td>一个打了 <code>ready-for-agent</code> 标签的 issue 得到一个会话，由它开 PR</td></tr>
+<tr><td>定时计划（cron）</td><td>重复性维护</td><td>每晚修一条 lint 规则</td></tr>
+<tr><td>CI 失败或监控告警</td><td>诊断、尝试修复</td><td>main 上构建失败，得到一个会话找出导致构建失败的那次提交并提出修复</td></tr>
+<tr><td>另一个会话完成</td><td>后续工作</td><td>一个智能体开的 PR 触发<a href="#automated-review自动化审查">自动化审查</a>，它的评论再触发一个修复会话</td></tr></tbody>
+</table>
+</div>
+<p>工厂不必覆盖整个软件流程。一个 cron 任务，运行一种会话、开一个可审查的 PR，就是一个工厂。从这么小的规模起步是有用的：范围很窄的循环产出小而相似的 PR，审查这些 PR 就能看出，在扩大循环范围之前它值得信任到什么程度。</p>
+<p>人可以处在工厂流程的任意环节——编写并给启动会话的 issue 打标签、在实现开始前批准计划、在合并前做<a href="#human-review人工审查">人工审查</a>。这些决定中哪些留给人，是主要的设计问题。一个代码库或其中一部分，如果没有人工审查工厂的产出，那就是<a href="#dark-factory黑灯工厂">黑灯工厂</a>。</p>
+<p><em>Usage:</em></p>
+<p>“那些 <code>no-floating-promises</code> 违规是谁修的？”</p>
+<p>“工厂。cron 任务每晚挑一条 lint 规则，开一个 PR。我早上审查就行。”</p>
+</section>
+<section class="entry" id="dark-factory黑灯工厂">
+<h3>Dark factory（黑灯工厂）</h3>
+<p>黑灯工厂是一个代码库或其中一部分，由<a href="#software-factory软件工厂">软件工厂</a>写代码，没有人读它。没有<a href="#human-review人工审查">人工审查</a>。人仍然可以编写启动工作的 issue。但产出的代码从来没有任何人审查它。这个名字来自“黑灯”（lights-out）工厂——车间里没有人，照样把东西造出来。</p>
+<p>黑灯工厂是把 <a href="#vibe-coding氛围编程">Vibe coding</a> 用在代码的某个区域，而不是用在一次改动上。做 Vibe coding 时，你选择不去读自己要求做的那处改动。但你知道这个改动存在。在黑灯工厂里，团队为整个区域一次性做出这个选择。之后，没有人逐个提出改动需求，也没有人看到改动。触发器多快启动新工作，改动就多快到来。</p>
+<p>问题在东西坏掉时显现。你不知道什么变了，因为没人读过那些改动。你必须调试一份团队里没人读过的代码。原因可能在许多改动中的任何一个里，而每一个都通过了检查。</p>
+<p><a href="#automated-check自动化检查">自动化检查</a>和<a href="#automated-review自动化审查">自动化审查</a>是仅有的关卡。如果它们没发现问题，问题就进了代码。</p>
+<p><em>Avoid:</em> 仅仅因为工厂在无人看管下运行，就把一个代码库称为“黑灯工厂”。如果<a href="#agent智能体">智能体</a>的<a href="#session会话">会话</a>以 <a href="#afk离开键盘">AFK</a> 运行，而有人审查它们的 PR，那就是软件工厂，不是黑灯工厂。</p>
+<p><em>Usage:</em></p>
+<p>“谁改了账单服务里的重试逻辑？团队里没人记得。”</p>
+<p>“账单服务是个黑灯工厂。智能体合并所有通过 CI 的改动。没人读过那个改动。”</p>
+</section>
+</section>
+</main>
+</div>
+<button class="to-toc" id="to-toc" type="button" aria-label="返回目录" hidden>↑ 目录</button>
+<script>
+(function () {
+  var button = document.getElementById("to-toc");
+  var toc = document.getElementById("toc");
+  if (!button || !toc) return;
+  function update() {
+    button.hidden = window.scrollY < 400;
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+  button.addEventListener("click", function () {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    toc.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  });
+})();
+</script>
+</body>
+</html>
